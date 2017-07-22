@@ -1,0 +1,53 @@
+@extends('layouts.app')
+@section('style')
+@stop
+@section('banner')
+@stop
+@section('content')
+    {{--错误处理--}}
+    @if (count($errors))
+        <div>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <div class="pblog-content g-container">
+        <div class="pblog-content-main g-container-main">
+            <form action="" method="post">
+                {{ csrf_field() }}
+                <div class="blog-titlediv">
+                    <input placeholder="请输入博客标题" id="pblog-title"  name="ariticle[title]"
+                           value="{{old('ariticle')['title'] ? old('ariticle')['title'] : $ariticle->title}}"/>
+                </div>
+                <div class="blog-contentdiv" style="width:813px;margin:30px auto;">
+                    <!-- 加载编辑器的容器 -->
+                    <script id="container" name="ariticle[content]" type="text/plain">
+                        {!!
+                            old('ariticle')['content'] ? old('ariticle')['content'] : $ariticle->content
+                        !!}
+                    </script>
+                </div>
+                <div class="blog-btndiv">
+                    <div class="g-btn"> <input type="submit" value="保存修改" class="g-btn" id="tijiao"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+@stop
+@section('javascript')
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="{{asset('static/ueditor/ueditor.config.js')}}"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="{{asset('static/ueditor/ueditor.all.js')}}"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var ue = UE.getEditor('container', {
+            initialFrameWidth: 810,
+            initialFrameHeight: 400
+        });
+    </script>
+@stop
+
