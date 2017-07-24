@@ -6,12 +6,33 @@
 @section('content')
     {{--错误处理--}}
     @if (count($errors))
+    {{--
         <div>
-            <ul>
+            <ul >
                 @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li>slsfsf{{ $error }}</li>
+                    <script type="text/javascript">
+                        console.log({{ $error }});
+                    </script>
+                    
                 @endforeach
             </ul>
+        </div>
+    --}}
+        <div class="modalDialog-bg" style="z-index: 1000;" >
+            <div class="modalDialog-content" style="border: 2px solid red;">
+                <img class="modalDialog-close pointer" src="{{asset('home/img/pageIndex/cancle.png')}}">
+                <div  class="modalDialog-top"><img src="{{asset('home/img/pageIndex/logo.png')}}"/></div>
+                <div  class="modalDialog-middle">
+                    @foreach($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+                <div  class="modalDialog-bottom">
+                    <span class="pointer" id="delete" style="background: rgba(23,22,27,1);">确定</span>
+                    <!-- <span class="pointer" style="background: rgba(23,22,27,0.5);">取消</span> -->
+                </div>
+            </div>
         </div>
     @endif
     <div class="pblog-content g-container">
@@ -38,6 +59,7 @@
     </div>
 @stop
 @section('javascript')
+
     <!-- 配置文件 -->
     <script type="text/javascript" src="{{asset('static/ueditor/ueditor.config.js')}}"></script>
     <!-- 编辑器源码文件 -->
@@ -49,5 +71,6 @@
             initialFrameHeight: 400
         });
     </script>
+    <script src="{{asset('home/js/modalDialog.js')}}"></script>
 @stop
 

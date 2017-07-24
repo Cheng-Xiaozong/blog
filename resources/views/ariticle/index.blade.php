@@ -74,6 +74,7 @@
             </div>
         </div>
     </div>
+    
 @stop
 @section('javascript')
     <script src="{{asset('home/js/home.js')}}"></script>

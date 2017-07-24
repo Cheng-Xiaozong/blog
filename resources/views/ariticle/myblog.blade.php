@@ -55,5 +55,6 @@
 @stop
 @section('javascript')
     <script src="{{asset('home/js/myBlog.js')}}"></script>
+    <script src="{{asset('home/js/home.js')}}"></script>
 @stop
 

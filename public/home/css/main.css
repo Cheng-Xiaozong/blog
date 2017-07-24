@@ -20,9 +20,9 @@ input:focus, textarea:focus, button:focus{outline:none; border:none}
 
 /*分页控件*/
 .pagination {font-size:12px;text-align:center;overflow:hidden;width:242px;height:26px;margin:0 auto;margin-bottom: 32px;}
-.pagination a{line-height:26px;float:left;width:26px;height:26px;border-radius: 50%;margin-left:10px;}
-.pagination a:first-child{margin-left:0;}
-.pagination a:first-child, .pagination a:last-child{font-size:16px;}
+.pagination li{line-height:26px;float:left;width:26px;height:26px;border-radius: 50%;margin-left:10px;}
+.pagination li:first-child{margin-left:0;}
+.pagination li:first-child, .pagination li:last-child{font-size:16px;}
 .page-box{
 	font-size:12px;
 	text-align:center;
@@ -32,9 +32,7 @@ input:focus, textarea:focus, button:focus{outline:none; border:none}
 	margin:0 auto;
 	margin-bottom: 32px;
 }
-.page-box ul li a{
-	line-height:26px;
-}
+
 .page-box ul li{
 	float: left;
 	line-height:26px;
@@ -45,6 +43,22 @@ input:focus, textarea:focus, button:focus{outline:none; border:none}
 	color:#cdc4a8;
 	background: #2E3840;
 	cursor: pointer;
+}
+.page-box ul li a{
+	display: inline-block;
+	width:26px;
+	height:26px;
+	line-height:26px;
+	/*width: 100%;*/
+}
+.page-box ul li span{
+	display: inline-block;
+	/*width:30px;
+	height:30px;
+	line-height:30px;*/
+	width: 100%;
+	color: white;
+	font-size: 14px;
 }
 .page-box ul li:hover{
 	background:#202a32;
