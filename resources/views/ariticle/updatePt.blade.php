@@ -21,7 +21,6 @@
                 <div class="blog-titlediv">
                     <input placeholder="请选择文件" type="file" name="portrait" value="{{old('portrait')}}"/>
                 </div>
-
                 <div class="blog-btndiv">
                     <div class="g-btn"> <input type="submit" value="提交" class="g-btn" id="tijiao"></div>
                 </div>

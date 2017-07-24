@@ -61,6 +61,16 @@ class UserRepository
         return $user->save();
     }
 
+    /**
+     * 修改资料
+     * @param $data array
+     * $return $num
+     */
+    public static function updateMyInfo($data)
+    {
+        return User::where('id','=',self::getUserId())->update($data);
+    }
+
 
 
 

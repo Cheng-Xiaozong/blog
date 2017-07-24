@@ -30,6 +30,8 @@ Route::group(['middleware'=>['auth']],function(){
     //博客点赞
     Route::any('ariticle/praise/{id}', 'Ariticle\AriticleController@praise');
     //上传头像
-    Route::any('updatePt/{id}', 'Ariticle\AriticleController@updatePt');
+    Route::any('updatePt', 'Ariticle\AriticleController@updatePt');
+    //修改资料
+    Route::post('updateMyInfo', 'Ariticle\AriticleController@updateMyInfo');
 });
 

@@ -29,7 +29,7 @@
         </tr>
     </table>
     <div  id="change">
-        <form >
+        <form method="post" action="{{url('update')}}">
             <table class="mblog-userinfoul" >
                 <tr class="">
                     <td>昵称 :</td><td ><input id="name2" type="text" name=""></td>
