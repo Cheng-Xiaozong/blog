@@ -138,27 +138,61 @@ class AriticleController extends Controller
         if($this->request->isMethod('post'))
         {
             $file=$this->request->file('portrait');
+            if(empty($file)) return ajaxReturn(0,'文件不能为空');
             //文件是否上传成功
             if($file->isValid())
             {
-                // 获取文件相关信息
                 $ext = $file->getClientOriginalExtension();     // 扩展名
                 $realPath = $file->getRealPath();   //临时文件的绝对路径
                 $filename = date('Y-m-d-H-i-s') . '-' . uniqid() . '.' . $ext;// 生成的文件名
                 // 使用我们新建的uploads本地存储空间（目录）
-                $bool = Storage::disk('user_portrait')->put($filename, file_get_contents($realPath));
-                if($bool){
-                    return $this->savePt($filename);
+                $savePt = Storage::disk('user_portrait')->put($filename, file_get_contents($realPath));
+                if($savePt){
+                    $fileUrl='home/user_portrait/'.$filename;
+                    $result=$this->user::updatePt($fileUrl);
+                    return $result ? ajaxReturn(1,'头像上传成功',$fileUrl) : ajaxReturn(-3,'文件保存失败！');
+                }else{
+                    return ajaxReturn(-2,'文件保存失败');
                 }
+            }else{
+                return ajaxReturn(-1,'头像上传失败，超出大小限制');
             }
         }
         return view('ariticle.updatePt');
     }
 
-    //保存头像
-    public function savePt($filename)
+    //修改个人信息
+    public function updateMyInfo()
     {
-        return $this->user::updatePt($filename) ? $filename : '上传失败！';
+        $validator = \Validator::make($this->request->input(), [
+            'User.name' => 'required|min:2|max:20',
+            'User.sex' => 'required|integer',
+            'User.hobby' => 'required',
+            'User.signature' => 'required',
+            'User.details' => 'required',
+        ], [
+            'required' => ':attribute 为必填项',
+            'min' => ':attribute 长度不符合要求',
+            'integer' => ':attribute 必须为整数',
+        ], [
+            'User.name' => '姓名',
+            'User.sex' => '性别',
+            'User.hobby' => '爱好',
+            'User.signature' => '个性签名',
+            'User.details' => '自我评价',
+        ]);
+        if ($validator->fails()) {
+            return ajaxReturn(0,'参数错误',$validator->errors());
+        }
+        $data=$this->request->input('User');
+        $result=$this->user::updateMyInfo($data);
+        if($result>=1){
+            return ajaxReturn(1,'修改成功！');
+        }else{
+            return ajaxReturn(-1,'修改失败！');
+        }
     }
+
+
 
 }
