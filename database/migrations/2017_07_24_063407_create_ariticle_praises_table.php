@@ -14,6 +14,8 @@ class CreateAriticlePraisesTable extends Migration
     {
         Schema::create('ariticle_praises', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->comment('用户ID');
+            $table->integer('ariticle_id')->comment('文章ID');
             $table->timestamps();
         });
     }

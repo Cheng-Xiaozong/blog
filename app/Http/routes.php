@@ -28,7 +28,7 @@ Route::group(['middleware'=>['auth']],function(){
     //我的博客详情
     Route::get('myAriticleDetail/{id}', 'Ariticle\AriticleController@myAriticleDetail');
     //博客点赞
-    Route::any('ariticle/praise/{id}', 'Ariticle\AriticleController@praise');
+    Route::post('ariticle/praise', 'Ariticle\AriticleController@praise');
     //上传头像
     Route::any('updatePt', 'Ariticle\AriticleController@updatePt');
     //修改资料

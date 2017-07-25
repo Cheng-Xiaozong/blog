@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\AriticlePraise;
 use App\User;
 use App\Ariticle;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -141,6 +142,25 @@ class AriticleRepository
         $ariticle=Ariticle::find($id);
         $this->isAuthor($ariticle);
         return Ariticle::where('id','=',$id)->update($data);
+    }
+
+    /**
+     * 博客点赞
+     * @param $user_id int
+     * @param $ariticle_id int
+     * @return string success|error|repetition
+     */
+    public static function ariticlePraise($user_id,$ariticle_id)
+    {
+        $praise=AriticlePraise::whereRaw('user_id = ? and ariticle_id = ?',[$user_id,$ariticle_id])->get();
+        if(!count($praise)){
+            $data['user_id']=$user_id;
+            $data['ariticle_id']=$ariticle_id;
+            $result=AriticlePraise::create($data);
+            return empty($result) ? 'error' : 'success';
+        }else{
+            return 'repetition';
+        }
     }
 
 

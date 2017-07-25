@@ -128,8 +128,27 @@ class AriticleController extends Controller
     //博客点赞
     public function praise()
     {
-
-
+        $validator = \Validator::make($this->request->input(), [
+            'ariticle_id' => 'required|min:2|max:20',
+        ], [
+            'required' => ':attribute 为必填项',
+            'integer' => ':attribute 不合法'
+        ], [
+            'ariticle_id' => '文章ID'
+        ]);
+        if ($validator->fails()) {
+            return ajaxReturn(-2,'非法参数',$validator->errors());
+        }
+        $result=$this->ariticle::ariticlePraise($this->user::getUserId(),$this->request->input('ariticle_id'));
+        switch ($result)
+        {
+            case 'success':
+                return ajaxReturn(1,'点赞成功');
+            case 'error':
+                return ajaxReturn(-1,'点赞失败');
+            case 'repetition':
+                return ajaxReturn(0,'不能重复点赞');
+        }
     }
 
     //更改头像
