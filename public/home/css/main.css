@@ -14,6 +14,20 @@ input:focus, textarea:focus, button:focus{outline:none; border:none}
 .g-title{text-align:left !important;padding-left:20px;color:#E9D77A;height:48px;background: #2e3840;line-height:48px;font-weight: bold;}
 .g-hover:hover{color:#E9D77A !important;}
 
+.date-dz-z-click-red {
+    /*width: 17px;
+    height: 17px;*/
+    display: block;
+}
+.z-num {
+    font-style: normal;
+}
+.date-dz-z-click {
+    color: #b83b44;
+}
+.red {
+    background-position: -6px -119px !important;
+}
 /*动画*/
 @keyframes modalDialogShow{0%{top:0}33%{top:50%}66%{top:40%}100%{top:50%}}
 @-webkit-keyframes modalDialogShow{0%{top:0}33%{top:50%}66%{top:40%}100%{top:50%}}
