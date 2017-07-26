@@ -87,10 +87,7 @@
                   url: urlGlobal+'/updatePt',
                   type: 'post',
                   data: portrait,
-                  async: false,  
-                  cache: false,  
-                  contentType: false,  
-                  processData: false,  
+                 
                   success: function (data) {  
                       // $("#avatar").attr({'src':returndata.data});
                       if (data.status == 1) {
@@ -209,19 +206,20 @@
                 $(this).find('.z-num').html(zNum);
                 $(this).find('.date-dz-z-click-red').addClass('red');
             }
+            // {"ariticle_id":3}
             
             $.ajax({
                 url: urlGlobal+'/ariticle/praise',  
                 type: "post",
-                data: {"ariticle_id":3},
+                data:{"_token":"{{csrf_token()}}",ariticle_id:4} 
                
-                success: function(html){ 
-                    
-                    console.log(html)
-                },
-                error:function(err){
+                // success: function(html){ 
+                //     console.log(html)
+                
+                // },
+                // error:function(err){
                      
-                }
+                // }
             })
         })
     </script>
