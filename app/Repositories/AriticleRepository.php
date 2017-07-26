@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\AriticlePraise;
-use App\User;
 use App\Ariticle;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Collection;
