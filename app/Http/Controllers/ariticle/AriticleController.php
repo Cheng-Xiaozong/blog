@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ariticle;
 
 use App\Ariticle;
 use App\Repositories\AriticleRepository;
+use App\Repositories\CommentRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,11 +15,13 @@ class AriticleController extends Controller
     protected $request;
     protected $ariticle;
     protected $user;
-    public function __construct(Request $request,AriticleRepository $ariticle,UserRepository $user)
+    protected $comment;
+    public function __construct(Request $request,AriticleRepository $ariticle,UserRepository $user,CommentRepository $comment)
     {
         $this->request=$request;
         $this->ariticle = $ariticle;
         $this->user = $user;
+        $this->comment = $comment;
     }
 
     //首页
@@ -210,6 +213,14 @@ class AriticleController extends Controller
         }else{
             return ajaxReturn(-1,'修改失败！');
         }
+    }
+
+    //获取评论
+    public function getComment($ariticle_id)
+    {
+        $commnent = $this->comment::getFloorComment($ariticle_id);
+        dd($commnent);
+        return ;
     }
 
 

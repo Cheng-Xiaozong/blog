@@ -15,6 +15,7 @@ Route::auth();
 Route::get('/', 'Ariticle\AriticleController@index');
 //文章详情页
 Route::get('ariticle/detail/{id}', 'Ariticle\AriticleController@detail');
+Route::get('getcomment/{id}', 'Ariticle\AriticleController@getComment');
 //需要登陆的页面
 Route::group(['middleware'=>['auth']],function(){
     //我的博客
