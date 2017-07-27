@@ -8,6 +8,7 @@ class User extends Authenticatable
 {
     const SEX_GRIL = 0; // 女
     const SEX_BOY = 1;    //男
+    const SEX_UN = 2;    //未知
     /**
      * The attributes that are mass assignable.
      *
@@ -42,8 +43,9 @@ class User extends Authenticatable
         $arr = [
             self::SEX_BOY => '男',
             self::SEX_GRIL => '女',
+            self::SEX_UN => '未知',
         ];
-        return empty($ind) ? '未知' : $arr[$ind];
+        return array_key_exists($ind, $arr) ? $arr[$ind] : $arr[self::SEX_UN];
     }
 
     /**

@@ -4,7 +4,6 @@
 @section('style')
     <link rel="stylesheet" href="{{asset('home/css/comment.css')}}">
     <link rel="stylesheet" href="{{asset('home/css/style.css')}}">
-
 @show
 @section('content')
     <div class="mblog-content g-container">
@@ -35,8 +34,6 @@
                         <div class="blogcontent-content">
                             <p class="content-text">{!!$newAriticle->content!!}</p>
                         </div>
-
-                        <!-- sdfsdfsddsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
                         <div class="commentAll">
                             <!--评论区域 begin-->
                             <div class="reviewArea clearfix">
@@ -45,48 +42,30 @@
                             </div>
                             <!--评论区域 end-->
                             <!--回复区域 begin-->
-                            <div class="comment-show">
-                                <div class="comment-show-con clearfix">
-                                    <div class="comment-show-con-img pull-left"><img src="{{$userInfo->portrait($userInfo->head_portrait)}}" alt=""></div>
-                                    <div class="comment-show-con-list pull-left clearfix">
-                                        <div class="pl-text clearfix">
-                                            <a href="#" class="comment-size-name">张三 : </a>
-                                            <span class="my-pl-con">&nbsp;来啊 造作啊!</span>
-                                        </div>
-                                        <div class="date-dz">
-                                            <span class="date-dz-left pull-left comment-time">2017-5-2 11:11:39</span>
-                                            <div class="date-dz-right pull-right comment-pl-block">
-                                                <a href="javascript:;" class="removeBlock">删除</a>
-                                                <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
-                                                <span class="pull-left date-dz-line">|</span>
-                                                <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
+                            @foreach($comments as $comment)
+                                <div class="comment-show">
+                                    <div class="comment-show-con clearfix">
+                                        <div class="comment-show-con-img pull-left"><img src="{{$comment->user_portrait}}" alt=""></div>
+                                        <div class="comment-show-con-list pull-left clearfix">
+                                            <div class="pl-text clearfix">
+                                                <a href="#" class="comment-size-name">{{$comment->user_name}} : </a>
+                                                <span class="my-pl-con">&nbsp;{{$comment->content}}</span>
                                             </div>
+                                            <div class="date-dz">
+                                                <span class="date-dz-left pull-left comment-time">{{$comment->created_at}}</span>
+                                                <div class="date-dz-right pull-right comment-pl-block">
+                                                    <a href="javascript:;" class="removeBlock">删除</a>
+                                                    <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
+                                                    <span class="pull-left date-dz-line">|</span>
+                                                    <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">{{$comment->praises}}</i>)</a>
+                                                </div>
+                                            </div>
+                                            <div class="hf-list-con"></div>
                                         </div>
-                                        <div class="hf-list-con"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <!--回复区域 end-->
+                            @endforeach
                         </div>
-                        <!-- sdfsddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
-
-                        <!-- <textarea class="blogcontent-comment">发表评论。。。</textarea>
-                        <ul class="blogcontent-commentlist">
-                            <li>
-                                <img src="{{asset('home/img/pageHome/home-author-icon.png')}}"/>
-                                <div class="commentlist-info">
-                                    <p class="commentlist-infotop"><span class="commentlist-infoname g-hover g-pointer">yangxin</span><span class="commentlist-infotime">14:23:03</span></p>
-                                    <p class="commentlist-infobottom">这篇文章针砭时弊，批评世俗，反思历史，解读人生，公正深刻，辛辣幽默，雅俗共赏，生动鲜活，甚是好文章哟 ！</p>
-                                </div>
-                            </li>
-                            <li>
-                                <img src="{{asset('home/img/pageHome/home-author-icon.png')}}"/>
-                                <div class="commentlist-info">
-                                    <p class="commentlist-infotop"><span class="commentlist-infoname g-pointer g-hover">yangxin</span><span class="commentlist-infotime">14:23:03</span></p>
-                                    <p class="commentlist-infobottom">这篇文章针砭时弊，批评世俗，反思历史，解读人生，公正深刻，辛辣幽默，雅俗共赏，生动鲜活，甚是好文章哟 ！</p>
-                                </div>
-                            </li>
-                        </ul> -->
                         <div class="blogcontent-loadmore g-btn">加载更多精彩评论...</div>
                     </div>
             </div>

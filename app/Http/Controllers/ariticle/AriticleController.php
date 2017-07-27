@@ -37,6 +37,7 @@ class AriticleController extends Controller
     {
         $data['newAriticle']=$this->ariticle->getAriticleById($id);
         $data['ariticles']=$this->ariticleList();
+        $data['comment']=$this->getComment($id);
         if($data['newAriticle'])
         {
             $this->ariticle->addAriticleViews($id);
@@ -51,6 +52,7 @@ class AriticleController extends Controller
     {
         $data['userInfo']=$this->user::getUserById($this->user::getUserId());
         $data['newAriticle']=$this->ariticle->getAriticleById($id);
+        $data['comments']=$this->getComment($id);
         return view('ariticle.myAriticleDetail',$data);
     }
 
@@ -218,9 +220,7 @@ class AriticleController extends Controller
     //获取评论
     public function getComment($ariticle_id)
     {
-        $commnent = $this->comment::getFloorComment($ariticle_id);
-        dd($commnent);
-        return ;
+        return $this->comment::getComment($ariticle_id);
     }
 
 

@@ -10,11 +10,11 @@ class CommentRepository
 
 
     /**
-     * 获取一级评论列表
+     * 根据文章获取评论列表
      * @param   int $project_id
      * @return Collection
      */
-    public static function getFloorComment($project_id)
+    public static function getComment($project_id)
     {
         $comments = AriticleComment::whereRaw('ariticle_id = ? and floor_id = ?',[$project_id,0])->get();
         foreach ($comments as $k =>$v)
