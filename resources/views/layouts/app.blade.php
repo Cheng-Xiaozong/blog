@@ -44,7 +44,7 @@
                         @endif
 
                     </div>
-                    <div class="username g-pointer">
+                    <div class="username g-pointer" data-userId="{{ Auth::user()->id }}">
                          用户名：{{ Auth::user()->name }}
                     </div>
                 @endif

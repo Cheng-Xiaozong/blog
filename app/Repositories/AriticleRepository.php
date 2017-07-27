@@ -35,33 +35,19 @@ class AriticleRepository
     }
 
     /**
-     * 获取最新发表文章
-     * @return Collection
-     */
-
-    public static function newAriticle()
-    {
-        $ariticle=Ariticle::orderBy('id','desc')->first();
-        if(!empty($ariticle))
-        {
-            $ariticle->author = self::getAuthorByUserId($ariticle->user_id);
-        }
-        return $ariticle;
-    }
-
-    /**
-     * 根据ID获取文章
+     * 根据ID获取文章,没有id显示最新文章
      * @param $id int
      * @return Collection
      */
 
-    public static function getAriticleById($id)
+    public static function getAriticleById($id=null)
     {
-        $ariticle =  Ariticle::find($id);
+        $ariticle = empty($id) ? Ariticle::orderBy('id','desc')->first() : Ariticle::find($id);
         if(!empty($ariticle))
         {
             $ariticle->author = self::getAuthorByUserId($ariticle->user_id);
-            $ariticle->head_portrait = self::getHeadPortraitByUserId($ariticle->user_id);
+            $ariticle->comment_mum = CommentRepository::getCommentNum($ariticle->id);
+            $ariticle->praise_num = self::getAriticlePraiseNum($ariticle->id);
         }
         return $ariticle;
     }
@@ -74,16 +60,6 @@ class AriticleRepository
     public static function getAuthorByUserId($user_id)
     {
         return UserRepository::getUserNameById($user_id);
-    }
-
-    /**
-     *根据user_id 获取文章作者头像
-     * @param $user_id int
-     * @return string
-     */
-    public static function getHeadPortraitByUserId($user_id)
-    {
-        return UserRepository::getHeadPortraitById($user_id);
     }
 
     /**
@@ -160,6 +136,14 @@ class AriticleRepository
         }else{
             return 'repetition';
         }
+    }
+
+    /**
+     * 获取文章的点赞数
+     */
+    public static function getAriticlePraiseNum($ariticle_id)
+    {
+        return AriticlePraise::where('ariticle_id','=',$ariticle_id)->count();
     }
 
 

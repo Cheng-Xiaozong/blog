@@ -25,15 +25,15 @@
                     <p style="text-align: center;color:#ffffaa;padding:30px;">还没有人发表过博客⊙︿⊙</p>
                 @else
                 <div class="home-content-blogcontentmain">
-                    <div class="blogcontent-title">{{$newAriticle->title}}</div>
+                    <div class="blogcontent-title" data-id="{{$newAriticle->id}}">{{$newAriticle->title}}</div>
                     <div class="blogcontent-bloginfo">
                         <div class="bloginfo-star">
                             <img src="{{asset('home/img/pageHome/home-bloginfo-star.png')}}"/>
-                            赞（99）
+                            赞（{{$newAriticle->praise_num}}）
                         </div>
                         <div class="bloginfo-comment">
                             <img src="{{asset('home/img/pageHome/home-bloginfo-comment.png')}}"/>
-                            评论（88）
+                            评论（{{$newAriticle->comment_mum}}）
                         </div>
                         <div class="bloginfo-readcount">
                             <img src="{{asset('home/img/pageHome/home-bloginfo-datetime.png')}}"/>
@@ -46,10 +46,6 @@
                     </div>
                     <div class="blogcontent-content">
                         <p class="content-text">{!!$newAriticle->content!!}</p>
-                    </div>
-                    <div class="blogcontent-author">
-                        <img src="{{!empty($newAriticle->head_portrait) ? $newAriticle->head_portrait : asset('home/img/pageHome/usericon02.png')}}"/>
-                        <span class="authorname g-pointer g-hover"> {{$newAriticle->author}}</span>
                     </div>
                     <textarea class="blogcontent-comment">发表评论。。。</textarea>
                     <ul class="blogcontent-commentlist">

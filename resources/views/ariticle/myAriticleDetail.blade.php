@@ -12,22 +12,22 @@
             <div class="g-container-right home-content-blogcontent">
                 <div class="blogcontent-text g-title">博客内容</div>
                     <div class="home-content-blogcontentmain">
-                        <div class="blogcontent-title">{{$newAriticle->title}}</div>
+                        <div class="blogcontent-title" data-id="{{$newAriticle->id}}">{{$newAriticle->title}}</div>
                         <div class="blogcontent-bloginfo">
                             <div class="bloginfo-star">
                                 <img src="{{asset('home/img/pageHome/home-bloginfo-star.png')}}"/>
-                                赞（99）
+                                赞（{{$newAriticle->praise_num}}）
                             </div>
                             <div class="bloginfo-comment">
                                 <img src="{{asset('home/img/pageHome/home-bloginfo-comment.png')}}"/>
-                                评论（88）
+                                评论（{{$newAriticle->comment_mum}}）
                             </div>
                             <div class="bloginfo-readcount">
                                 <img src="{{asset('home/img/pageHome/home-bloginfo-datetime.png')}}"/>
                                 浏览（{{$newAriticle->views}}）
                             </div>
                             <div class="bloginfo-datetime">
-                                {{$newAriticle->author}} 发表于 {{$newAriticle->created_at}}
+                                {{$newAriticle->created_at}}
                             </div>
 
                         </div>
@@ -43,7 +43,7 @@
                             <!--评论区域 end-->
                             <!--回复区域 begin-->
                             @foreach($comments as $comment)
-                                <div class="comment-show">
+                                <div class="comment-show" data-id="{{$comment->id}}">
                                     <div class="comment-show-con clearfix">
                                         <div class="comment-show-con-img pull-left"><img src="{{$comment->user_portrait}}" alt=""></div>
                                         <div class="comment-show-con-list pull-left clearfix">
@@ -54,8 +54,10 @@
                                             <div class="date-dz">
                                                 <span class="date-dz-left pull-left comment-time">{{$comment->created_at}}</span>
                                                 <div class="date-dz-right pull-right comment-pl-block">
-                                                    <a href="javascript:;" class="removeBlock">删除</a>
-                                                    <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
+                                                    @if($comment->user_id == Auth::user()->id)
+                                                        <a href="javascript:;" class="removeBlock">删除</a>
+                                                    @endif
+                                                    <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复({{$comment->num}})</a>
                                                     <span class="pull-left date-dz-line">|</span>
                                                     <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">{{$comment->praises}}</i>)</a>
                                                 </div>

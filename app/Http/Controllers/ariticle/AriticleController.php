@@ -27,7 +27,7 @@ class AriticleController extends Controller
     //首页
     public function index()
     {
-        $data['newAriticle']=$this->ariticle->newAriticle();
+        $data['newAriticle']=$this->ariticle->getAriticleById();
         $data['ariticles']=$this->ariticleList();
         return view('ariticle.index',$data);
     }
@@ -221,6 +221,12 @@ class AriticleController extends Controller
     public function getComment($ariticle_id)
     {
         return $this->comment::getComment($ariticle_id);
+    }
+
+    //获取层级评论
+    public function getFloorDetailComment($floor_id)
+    {
+        return $this->comment::getFloorDetailComment($floor_id);
     }
 
 

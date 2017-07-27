@@ -17,7 +17,7 @@
                                     <p>{{date('Y',strtotime($ariticle->created_at))}}</p>
                                 </div>
                                 <div class="mblog-blogother">
-                                    <div class="mblog-blog-other-title"><a class="title-hover g-pointer" href="{{url('myAriticleDetail',$ariticle->id)}}">{{$ariticle->title}}</a></div>
+                                    <div class="mblog-blog-other-title"><a class="title-hover g-pointer" data-id="{{$ariticle->id}}" href="{{url('myAriticleDetail',$ariticle->id)}}">{{$ariticle->title}}</a></div>
                                     <div class="mblog-blog-other-bloginfo">
                                         <div class="del g-pointer">
                                             <img src="{{asset('home/img/pageMyblog/mblog-delete.png')}}">
@@ -26,10 +26,6 @@
                                         <div class="del g-pointer">
                                             <img src="{{asset('home/img/pageMyblog/mblog-delete.png')}}">
                                             <a href="{{url('ariticle/edit',['id'=>$ariticle->id])}}">编辑</a>
-                                        </div>
-                                        <div class="star g-pointer ">
-                                            <img src="{{asset('home/img/pageHome/home-bloginfo-star.png')}}"/>
-                                            赞（<span class="z-num date-dz-z-click-red">0</span>）
                                         </div>
                                         <div class="">
                                             <img src="{{asset('home/img/pageHome/home-bloginfo-comment.png')}}"/>评论（99+）

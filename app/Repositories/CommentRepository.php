@@ -21,7 +21,7 @@ class CommentRepository
         {
             $comments[$k]->user_name=UserRepository::getUserNameById($v->user_id);
             $comments[$k]->user_portrait=UserRepository::getHeadPortraitById($v->user_id);
-            $comments[$k]->floor_detail_comment=self::getFloorDetailComment($v->id);
+            $comments[$k]->num=self::getFloorNum($v->id);
         }
         return $comments;
     }
@@ -46,7 +46,25 @@ class CommentRepository
           return $floors;
       }
 
+      /**
+       * 获取楼层评论总数
+       * @param int $floor_id
+       * @return int $num
+       */
+      public static function getFloorNum($floor_id)
+      {
+            return AriticleComment::whereRaw('floor_id = ? and floor_id != ?',[$floor_id,0])->count();
+      }
 
+    /**
+     * 根据文章获取
+     * @param int $project_id
+     * @return int $num
+     */
+    public static function getCommentNum($project_id)
+    {
+        return AriticleComment::whereRaw('ariticle_id = ?',[$project_id])->count();
+    }
 
 
 
