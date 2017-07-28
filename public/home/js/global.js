@@ -5,5 +5,5 @@
  */
 var testStr = 'testing';
 
-var urlGlobal = "http://localhost/blog/public";
+var urlGlobal = "http://bl.cn";
 

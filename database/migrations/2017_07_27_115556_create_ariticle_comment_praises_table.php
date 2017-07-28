@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAriticleCommentsTable extends Migration
+class CreateAriticleCommentPraisesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,10 @@ class CreateAriticleCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ariticle_comments', function (Blueprint $table) {
+        Schema::create('ariticle_comment_praises', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->comment('用户ID');
-            $table->integer('ariticle_id')->comment('文章ID');
-            $table->integer('floor_id')->comment('层ID');
-            $table->integer('parent_user_id')->comment('父ID');
-            $table->string('content')->comment('内容');
+            $table->integer('comment_id')->comment('评论ID');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateAriticleCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ariticle_comments');
+        Schema::drop('ariticle_comment_praises');
     }
 }

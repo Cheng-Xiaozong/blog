@@ -15,7 +15,8 @@ Route::auth();
 Route::get('/', 'Ariticle\AriticleController@index');
 //文章详情页
 Route::get('ariticle/detail/{id}', 'Ariticle\AriticleController@detail');
-Route::get('getcomment/{id}', 'Ariticle\AriticleController@getComment');
+Route::post('commentDetail', 'Ariticle\AriticleController@getFloorDetailComment');
+Route::post('commentsMore', 'Ariticle\AriticleController@commentsMore');
 //需要登陆的页面
 Route::group(['middleware'=>['auth']],function(){
     //我的博客
@@ -34,5 +35,17 @@ Route::group(['middleware'=>['auth']],function(){
     Route::any('updatePt', 'Ariticle\AriticleController@updatePt');
     //修改资料
     Route::post('updateMyInfo', 'Ariticle\AriticleController@updateMyInfo');
+    //创建一级评论
+    Route::post('createComment', 'Ariticle\AriticleController@createComment');
+    //创建楼层回复
+    Route::post('createFloor', 'Ariticle\AriticleController@createFloor');
+    //创建楼层评论回复
+    Route::post('createFloorComment', 'Ariticle\AriticleController@createFloorComment');
+    //删除主楼回复
+    Route::post('deleteComment', 'Ariticle\AriticleController@deleteComment');
+    //删除楼层回复
+    Route::post('deleteFloorComment', 'Ariticle\AriticleController@deleteFloorComment');
+    //评论点赞
+    Route::post('commentPraise', 'Ariticle\AriticleController@commentPraise');
 });
 

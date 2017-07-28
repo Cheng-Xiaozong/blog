@@ -28,7 +28,7 @@
                                             <a href="{{url('ariticle/edit',['id'=>$ariticle->id])}}">编辑</a>
                                         </div>
                                         <div class="">
-                                            <img src="{{asset('home/img/pageHome/home-bloginfo-comment.png')}}"/>评论（99+）
+                                            <img src="{{asset('home/img/pageHome/home-bloginfo-comment.png')}}"/>评论（{{$ariticle->comment_mum}}）
                                         </div>
                                         <div class="">
                                             <img src="{{asset('home/img/pageHome/home-bloginfo-datetime.png')}}"/>浏览（{{$ariticle->views}}）

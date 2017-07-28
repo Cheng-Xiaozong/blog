@@ -29,6 +29,7 @@ class AriticleController extends Controller
     {
         $data['newAriticle']=$this->ariticle->getAriticleById();
         $data['ariticles']=$this->ariticleList();
+        $data['comments']=$this->getComment($this->ariticle::getAriticleId());
         return view('ariticle.index',$data);
     }
 
@@ -37,7 +38,7 @@ class AriticleController extends Controller
     {
         $data['newAriticle']=$this->ariticle->getAriticleById($id);
         $data['ariticles']=$this->ariticleList();
-        $data['comment']=$this->getComment($id);
+        $data['comments']=$this->getComment($id);
         if($data['newAriticle'])
         {
             $this->ariticle->addAriticleViews($id);
@@ -53,7 +54,13 @@ class AriticleController extends Controller
         $data['userInfo']=$this->user::getUserById($this->user::getUserId());
         $data['newAriticle']=$this->ariticle->getAriticleById($id);
         $data['comments']=$this->getComment($id);
-        return view('ariticle.myAriticleDetail',$data);
+        if($data['newAriticle'])
+        {
+            return view('ariticle.myAriticleDetail',$data);
+        }else{
+            return view('errors.404');
+        }
+
     }
 
     //文章列表
@@ -224,10 +231,166 @@ class AriticleController extends Controller
     }
 
     //获取层级评论
-    public function getFloorDetailComment($floor_id)
+    public function getFloorDetailComment()
     {
-        return $this->comment::getFloorDetailComment($floor_id);
+        $floor_id=$this->request->input('floor_id');
+        $result=$this->comment::getFloorDetailComment($floor_id);
+        return empty(count($result)) ? ajaxReturn(-1,'数据为空！') : ajaxReturn(1,'查询成功！',$result);
     }
+
+    //获取更多评论
+    public function commentsMore()
+    {
+        $ariticle_id=$this->request->input('ariticle_id');
+        $last_id=$this->request->input('last_id');
+        $result=$this->comment::commentsMore($ariticle_id,$last_id);
+        return empty(count($result)) ? ajaxReturn(-1,'数据为空！') : ajaxReturn(1,'查询成功！',$result);
+    }
+
+    //评论文章(一级评论)
+    public function createComment()
+    {
+        $validator = \Validator::make($this->request->input(), [
+            'Comment.ariticle_id' => 'required|integer',
+            'Comment.content' => 'required|min:2|max:50',
+        ], [
+            'required' => ':attribute 为必填项',
+            'min' => ':attribute 长度不符合要求',
+            'max' => ':attribute 长度不符合要求',
+            'integer' => ':attribute 必须为整数',
+        ], [
+            'Comment.ariticle_id' => '文章ID',
+            'Comment.content' => '内容',
+        ]);
+        if ($validator->fails()) {
+            return ajaxReturn(0,'参数错误',$validator->errors());
+        }
+        $data=$this->request->input('Comment');
+        $data['user_id']=$this->user::getUserId();
+        $data['floor_id']=0;
+        $data['parent_user_id']=0;
+        $result=$this->comment::createComment($data);
+        if($result){
+            return ajaxReturn(1,'评论成功！',$result);
+        }else{
+            return ajaxReturn(-1,'评论失败');
+        }
+    }
+
+    //回复楼层
+    public function createFloor()
+    {
+        $validator = \Validator::make($this->request->input(), [
+            'Comment.ariticle_id' => 'required|integer',
+            'Comment.floor_id' => 'required|integer',
+            'Comment.content' => 'required|min:2|max:50',
+        ], [
+            'required' => ':attribute 为必填项',
+            'min' => ':attribute 长度不符合要求',
+            'max' => ':attribute 长度不符合要求',
+            'integer' => ':attribute 必须为整数',
+        ], [
+            'Comment.ariticle_id' => '文章ID',
+            'Comment.floor_id' => '层ID',
+            'Comment.content' => '内容',
+        ]);
+        if ($validator->fails()) {
+            return ajaxReturn(0,'参数错误',$validator->errors());
+        }
+        $data=$this->request->input('Comment');
+        $data['user_id']=$this->user::getUserId();
+        $data['parent_user_id']=0;
+        $result=$this->comment::createComment($data);
+        if($result){
+            return ajaxReturn(1,'回复成功！',$result);
+        }else{
+            return ajaxReturn(-1,'回复失败');
+        }
+    }
+
+    //回复楼层中的评论
+    public function createFloorComment()
+    {
+        $validator = \Validator::make($this->request->input(), [
+            'Comment.ariticle_id' => 'required|integer',
+            'Comment.floor_id' => 'required|integer',
+            'Comment.parent_user_id' => 'required|integer',
+            'Comment.content' => 'required|min:2|max:50',
+        ], [
+            'required' => ':attribute 为必填项',
+            'min' => ':attribute 长度不符合要求',
+            'max' => ':attribute 长度不符合要求',
+            'integer' => ':attribute 必须为整数',
+        ], [
+            'Comment.ariticle_id' => '文章ID',
+            'Comment.content' => '内容',
+            'Comment.floor_id' => '层ID',
+            'Comment.parent_user_id' => '回复的用户ID',
+        ]);
+        if ($validator->fails()) {
+            return ajaxReturn(0,'参数错误',$validator->errors());
+        }
+        $data=$this->request->input('Comment');
+        $data['user_id']=$this->user::getUserId();
+        $result=$this->comment::createComment($data);
+        if($result){
+            return ajaxReturn(1,'回复成功！',$result);
+        }else{
+            return ajaxReturn(-1,'回复失败');
+        }
+    }
+
+    //删除主楼评论
+    public function deleteComment()
+    {
+        $result=$this->comment::deleteComment($this->request->input('id'));
+        if($result){
+            return ajaxReturn(1,'删除成功！');
+        }else{
+            return ajaxReturn(-1,'删除失败');
+        }
+    }
+
+    //删除评论楼层回复
+    public function deleteFloorComment()
+    {
+        $result=$this->comment::deleteFloorComment($this->request->input('floor_id'));
+        if($result){
+            return ajaxReturn(1,'删除成功！');
+        }else{
+            return ajaxReturn(-1,'删除失败');
+        }
+    }
+
+
+
+    //评论点赞
+    public function commentPraise()
+    {
+        $validator = \Validator::make($this->request->input(),[
+            'comment_id' => 'required|min:2|max:20',
+        ],[
+            'required' => ':attribute 为必填项',
+            'integer' => ':attribute 不合法'
+        ],[
+            'comment_id' => '评论ID'
+        ]);
+        if ($validator->fails()) {
+            return ajaxReturn(-2,'非法参数',$validator->errors());
+        }
+        $result=$this->comment::commentPraise($this->user::getUserId(),$this->request->input('comment_id'));
+        switch ($result)
+        {
+            case 'success':
+                return ajaxReturn(1,'点赞成功');
+            case 'error':
+                return ajaxReturn(-1,'点赞失败');
+            case 'repetition':
+                return ajaxReturn(0,'不能重复点赞');
+        }
+    }
+
+
 
 
 

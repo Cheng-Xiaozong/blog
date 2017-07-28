@@ -1,4 +1,9 @@
 @extends('layouts.app')
+@section('style')
+    <link rel="stylesheet" href="{{asset('home/css/comment.css')}}">
+    <link rel="stylesheet" href="{{asset('home/css/style.css')}}">
+
+@show
 @section('content')
     <div class="home-content g-container">
         <div class="home-content-main g-container-main">
@@ -47,24 +52,7 @@
                     <div class="blogcontent-content">
                         <p class="content-text">{!!$newAriticle->content!!}</p>
                     </div>
-                    <textarea class="blogcontent-comment">发表评论。。。</textarea>
-                    <ul class="blogcontent-commentlist">
-                        <li>
-                            <img src="{{asset('home/img/pageHome/home-author-icon.png')}}"/>
-                            <div class="commentlist-info">
-                                <p class="commentlist-infotop"><span class="commentlist-infoname g-hover g-pointer">yangxin</span><span class="commentlist-infotime">14:23:03</span></p>
-                                <p class="commentlist-infobottom">这篇文章针砭时弊，批评世俗，反思历史，解读人生，公正深刻，辛辣幽默，雅俗共赏，生动鲜活，甚是好文章哟 ！</p>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="{{asset('home/img/pageHome/home-author-icon.png')}}"/>
-                            <div class="commentlist-info">
-                                <p class="commentlist-infotop"><span class="commentlist-infoname g-pointer g-hover">yangxin</span><span class="commentlist-infotime">14:23:03</span></p>
-                                <p class="commentlist-infobottom">这篇文章针砭时弊，批评世俗，反思历史，解读人生，公正深刻，辛辣幽默，雅俗共赏，生动鲜活，甚是好文章哟 ！</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="blogcontent-loadmore g-btn">加载更多精彩评论...</div>
+                    @include('ariticle.comment')
                 </div>
                 @endif
             </div>
@@ -73,6 +61,11 @@
     
 @stop
 @section('javascript')
+    <script src="{{asset('home/js/jquery.min.js')}}"></script>
     <script src="{{asset('home/js/home.js')}}"></script>
+    <script src="{{asset('home/js/global.js')}}"></script>
+    <script src="{{asset('home/js/jquery.flexText.js')}}"></script>
+    <script src="{{asset('home/js/myBlogDiscuss.js')}}"></script>
+    <script src="{{asset('home/js/myBlog.js')}}"></script>
 @stop
 

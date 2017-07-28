@@ -18,9 +18,15 @@ class AriticleRepository
      */
     public static function getAriticleByUserId($user_id,$num)
     {
-        return Ariticle::where('user_id', $user_id)
+        $ariticles=Ariticle::where('user_id', $user_id)
             ->orderBy('created_at', 'asc')
             ->paginate($num);
+        foreach ($ariticles as $key => $value)
+        {
+            $ariticles[$key]->comment_mum = CommentRepository::getCommentNum($value->id);
+            $ariticles[$key]->praise_num =  self::getAriticlePraiseNum($value->id);
+        }
+        return $ariticles;
     }
 
     /**
@@ -51,6 +57,17 @@ class AriticleRepository
         }
         return $ariticle;
     }
+
+    /**
+     * 获取文章ID
+     */
+    public static function getAriticleId($id=null)
+    {
+        $ariticle = empty($id) ? Ariticle::orderBy('id','desc')->first() : Ariticle::find($id);
+        return $ariticle->id;
+    }
+
+
 
     /**
      *根据user_id 获取文章作者姓名

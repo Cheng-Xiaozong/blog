@@ -17,7 +17,7 @@
     <div class="home-header g-header">
         <div class="home-header-main g-header-main">
             <div class="home-header-logo g-header-logo">
-                <img src="{{asset('home/img/pageHome/home-logo.png')}}"/>
+                <a href="{{url('/')}}"><img src="{{asset('home/img/pageHome/home-logo.png')}}"/></a>
             </div>
             <div class="home-header-userinfo g-header-userinfo">
                 @if (Auth::guest())
