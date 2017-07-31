@@ -67,8 +67,8 @@
         &copy; Brother Blog，长沙市岳麓区薯仔饭餐厅
     </div>
 @show
-<script src="{{asset('home/js/global.js')}}"></script>
 <script src="{{asset('home/js/jquery.min.js')}}"></script>
+<script src="{{asset('home/js/global.js')}}"></script>
 <script src="{{asset('home/js/modalDialog.js')}}"></script>
 @section('javascript')
 
