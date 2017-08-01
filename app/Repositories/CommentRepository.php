@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Repositories;
-use App\AriticleComment;
-use App\AriticleCommentPraise;
 use Illuminate\Support\Collection;
 
 class CommentRepository
@@ -12,15 +10,15 @@ class CommentRepository
      * @param   int $project_id
      * @return Collection
      */
-    public static function getComment($project_id)
+    public static function getComment($project,$project_id,$comment)
     {
-        $comments = AriticleComment::whereRaw('ariticle_id = ? and floor_id = ?',[$project_id,0])->take(5)->get();
+        $comments = $project::whereRaw('project_id = ? and floor_id = ?',[$project_id,0])->take(5)->get();
         foreach ($comments as $k =>$v)
         {
             $comments[$k]->user_name=UserRepository::getUserNameById($v->user_id);
-            $comments[$k]->praises=CommentRepository::getCommentPraiseNum($v->id);
+            $comments[$k]->praises=CommentRepository::getCommentPraiseNum($comment,$v->id);
             $comments[$k]->user_portrait=UserRepository::getHeadPortraitById($v->user_id);
-            $comments[$k]->num=self::getFloorNum($v->id);
+            $comments[$k]->num=self::getFloorNum($project,$v->id);
         }
         return $comments;
     }
@@ -30,15 +28,15 @@ class CommentRepository
      * @param   int $last_id
      * @return Collection
      */
-    public static function commentsMore($project_id,$last_id)
+    public static function commentsMore($project,$project_id,$last_id,$comment)
     {
-        $comments = AriticleComment::whereRaw('ariticle_id = ? and floor_id = ? and id > ?',[$project_id,0,$last_id])->take(5)->get();
+        $comments = $project::whereRaw('project_id = ? and floor_id = ? and id > ?',[$project_id,0,$last_id])->take(5)->get();
         foreach ($comments as $k =>$v)
         {
             $comments[$k]->user_name=UserRepository::getUserNameById($v->user_id);
-            $comments[$k]->praises=CommentRepository::getCommentPraiseNum($v->id);
+            $comments[$k]->praises=CommentRepository::getCommentPraiseNum($comment,$v->id);
             $comments[$k]->user_portrait=UserRepository::getHeadPortraitById($v->user_id);
-            $comments[$k]->num=self::getFloorNum($v->id);
+            $comments[$k]->num=self::getFloorNum($project,$v->id);
         }
         return $comments;
     }
@@ -48,9 +46,9 @@ class CommentRepository
      * @param   int $floor_id
      * @return Collection
      */
-      public static function getFloorDetailComment($floor_id)
+      public static function getFloorDetailComment($project,$floor_id)
       {
-          $floors=AriticleComment::whereRaw('floor_id = ? and floor_id != ?',[$floor_id,0])->get();
+          $floors=$project::whereRaw('floor_id = ? and floor_id != ?',[$floor_id,0])->get();
           foreach ($floors as $key => $value)
           {
               $floors[$key]->user_name=UserRepository::getUserNameById($value->user_id);
@@ -68,9 +66,9 @@ class CommentRepository
       * @param int $floor_id
       * @return int $num
       */
-      public static function getFloorNum($floor_id)
+      public static function getFloorNum($project,$floor_id)
       {
-            return AriticleComment::whereRaw('floor_id = ? and floor_id != ?',[$floor_id,0])->count();
+            return $project::whereRaw('floor_id = ? and floor_id != ?',[$floor_id,0])->count();
       }
 
     /**
@@ -78,9 +76,9 @@ class CommentRepository
      * @param int $project_id
      * @return int $num
      */
-    public static function getCommentNum($project_id)
+    public static function getCommentNum($project,$project_id)
     {
-        return AriticleComment::whereRaw('ariticle_id = ?',[$project_id])->count();
+        return $project::whereRaw('project_id = ?',[$project_id])->count();
     }
 
     /**
@@ -88,9 +86,9 @@ class CommentRepository
      * @param array $data
      * @return Collection
      */
-    public static function createComment($data)
+    public static function createComment($project,$data)
     {
-        return AriticleComment::create($data);
+        return $project::create($data);
     }
 
     /**
@@ -98,14 +96,14 @@ class CommentRepository
      * @param int $id
      * @return bool
      */
-    public static function deleteComment($id)
+    public static function deleteComment($project,$id)
     {
-        $comment = AriticleComment::find($id);
+        $comment = $project::find($id);
         if($comment->user_id!=UserRepository::getUserId()){
             return false;
         }else{
            if($comment->delete()){
-               AriticleComment::where('floor_id','=',$id)->delete();
+               $project::where('floor_id','=',$id)->delete();
                return ture;
            }else{
                return false;
@@ -118,9 +116,9 @@ class CommentRepository
      * @param int $id
      * @return bool
      */
-    public static function deleteFloorComment($id)
+    public static function deleteFloorComment($project,$id)
     {
-        $comment = AriticleComment::find($id);
+        $comment = $project::find($id);
         if($comment->user_id!=UserRepository::getUserId()){
             return false;
         }else{
@@ -134,13 +132,13 @@ class CommentRepository
      * @param $comment_id int
      * @return string success|error|repetition
      */
-    public static function commentPraise($user_id,$comment_id)
+    public static function commentPraise($project,$user_id,$comment_id)
     {
-        $praise=AriticleCommentPraise::whereRaw('user_id = ? and ariticle_id = ?',[$user_id,$comment_id])->get();
+        $praise=$project::whereRaw('user_id = ? and project_id = ?',[$user_id,$comment_id])->get();
         if(!count($praise)){
             $data['user_id']=$user_id;
             $data['comment_id']=$comment_id;
-            $result=AriticleCommentPraise::create($data);
+            $result=$project::create($data);
             return empty($result) ? 'error' : 'success';
         }else{
             return 'repetition';
@@ -152,12 +150,9 @@ class CommentRepository
      * @param $comment_id int
      * @return int $num
      */
-    public static function getCommentPraiseNum($comment_id)
+    public static function getCommentPraiseNum($comment,$comment_id)
     {
-        return AriticleCommentPraise::where('comment_id','=',$comment_id)->count();
+        return $comment::where('comment_id','=',$comment_id)->count();
     }
-
-
-
 
 }

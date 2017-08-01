@@ -45,7 +45,7 @@
                             浏览（{{$newAriticle->views}}）
                         </div>
                         <div class="bloginfo-datetime">
-                            {{$newAriticle->author}} 发表于 {{$newAriticle->created_at}}
+                            <a href="{{url('brotherBlog',['user_id'=>$newAriticle->user_id])}}">{{$newAriticle->author}}</a> 发表于 {{$newAriticle->created_at}}
                         </div>
 
                     </div>
@@ -108,7 +108,7 @@
               url: urlGlobal+'/createComment',
               type: 'post',
               dataType:'json',
-              data: { "_token":"{{csrf_token()}}","Comment[ariticle_id]":ariticle_id,"Comment[content]":oSize},
+              data: { "_token":"{{csrf_token()}}","Comment[project_id]":ariticle_id,"Comment[content]":oSize},
               success: function (data) {  
                   // $("#avatar").attr({'src':returndata.data});
                   if (data.status == -1) {
@@ -204,7 +204,7 @@
               url: urlGlobal+'/createFloor',
               type: 'post',
               dataType:'json',
-              data: { "_token":"{{csrf_token()}}","Comment[ariticle_id]":thisAriticleId,"Comment[content]":huifuContent,"Comment[floor_id]":floorId},
+              data: { "_token":"{{csrf_token()}}","Comment[project_id]":thisAriticleId,"Comment[content]":huifuContent,"Comment[floor_id]":floorId},
               success: function (data) {  
                   // $("#avatar").attr({'src':returndata.data});
                   if (data.status == -1) {
@@ -291,7 +291,7 @@
               url: urlGlobal+'/createFloorComment',
               type: 'post',
               dataType:'json',
-              data: { "_token":"{{csrf_token()}}","Comment[ariticle_id]":thisAriticleId,"Comment[content]":huifuContent,"Comment[floor_id]":floorId,"Comment[parent_user_id]":parentId},
+              data: { "_token":"{{csrf_token()}}","Comment[project_id]":thisAriticleId,"Comment[content]":huifuContent,"Comment[floor_id]":floorId,"Comment[parent_user_id]":parentId},
               success: function (data) {  
                     console.log(data);
                   // $("#avatar").attr({'src':returndata.data});

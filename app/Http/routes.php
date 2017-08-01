@@ -15,8 +15,14 @@ Route::auth();
 Route::get('/', 'Ariticle\AriticleController@index');
 //文章详情页
 Route::get('ariticle/detail/{id}', 'Ariticle\AriticleController@detail');
+//查看回复内容
 Route::post('commentDetail', 'Ariticle\AriticleController@getFloorDetailComment');
+//查看更多评论
 Route::post('commentsMore', 'Ariticle\AriticleController@commentsMore');
+//兄弟的博客
+Route::get('brotherBlog/{user_id}', 'Ariticle\AriticleController@brotherBlog');
+//兄弟的博客详情
+Route::get('BrotherAriticleDetail/{ariticle_id}', 'Ariticle\AriticleController@BrotherAriticleDetail');
 //需要登陆的页面
 Route::group(['middleware'=>['auth']],function(){
     //我的博客

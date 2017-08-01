@@ -16,8 +16,7 @@
                 </div>
                 <div class="comment-show-con-list pull-left clearfix">
                     <div class="pl-text clearfix">
-                        <a href="#" class="comment-size-name" data-userId="{{$comment->user_id}}">{{$comment->user_name}}：</a>
-                        <!-- <span class="comment-size-name"></span> -->
+                        <a href="{{url('brotherBlog',['user_id'=>$comment->user_id])}}" class="comment-size-name" data-userId="{{$comment->user_id}}">{{$comment->user_name}}：</a>
                         <span class="my-pl-con">&nbsp;{{$comment->content}}</span>
                     </div>
                     <div class="date-dz">
