@@ -1,3 +1,5 @@
+// $(document).ready(function(){
+
 
 
     $(function () {
@@ -27,13 +29,39 @@
         var now=year+'-'+month+"-"+date+" "+h+':'+m+":"+s;
         //获取输入内容
         var oSize = $(this).siblings('.flex-text-wrap').find('.comment-input').val();
-        console.log(oSize);
+        oHtml = '<div class="comment-show-con clearfix"><div class="comment-show-con-img pull-left"><img class="imgUrl" src="" alt=""></div> <div class="comment-show-con-list pull-left clearfix"><div class="pl-text clearfix"> <a href="#" class="comment-size-name">David Beckham : </a> <span class="my-pl-con">&nbsp;'+ oSize +'</span> </div> <div class="date-dz"> <span class="date-dz-left pull-left comment-time">'+now+'</span> <div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock">删除</a> <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a></div> </div><div class="hf-list-con"></div></div> </div>';
+        // console.log(oSize);
+
         //动态创建评论模块
-        oHtml = '<div class="comment-show-con clearfix"><div class="comment-show-con-img pull-left"><img src="img/pageHome/usericon02.png" alt=""></div> <div class="comment-show-con-list pull-left clearfix"><div class="pl-text clearfix"> <a href="#" class="comment-size-name">David Beckham : </a> <span class="my-pl-con">&nbsp;'+ oSize +'</span> </div> <div class="date-dz"> <span class="date-dz-left pull-left comment-time">'+now+'</span> <div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock">删除</a> <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a></div> </div><div class="hf-list-con"></div></div> </div>';
-        if(oSize.replace(/(^\s*)|(\s*$)/g, "") != ''){
-            $(this).parents('.reviewArea ').siblings('.comment-show').prepend(oHtml);
-            $(this).siblings('.flex-text-wrap').find('.comment-input').prop('value','').siblings('pre').find('span').text('');
-        }
+        var ariticle_id = $(".blogcontent-title").attr("data-id");
+        console.log(ariticle_id);
+        console.log(oSize);
+        // ,"Comment[ariticle_id]":ariticle_id,"Comment[content]":oSize   "{{csrf_token()}}"
+        $.ajax({
+          url: urlGlobal+'/createComment',
+          type: 'post',
+          dataType:'json',
+           data: { 
+            "_token":"{{csrf_token()}}"},
+          success: function (data) {  
+              // $("#avatar").attr({'src':returndata.data});
+              if (data.status == -1) {
+                alert("评论失败");
+              }
+              if(data.status == 1){
+                if(oSize.replace(/(^\s*)|(\s*$)/g, "") != ''){
+                    $(this).parents('.reviewArea ').siblings('.comment-show').prepend(oHtml);
+                    $(this).siblings('.flex-text-wrap').find('.comment-input').prop('value','').siblings('pre').find('span').text('');
+                }
+              }
+              
+          },  
+          error: function (data) {  
+              
+          }  
+        });
+        
+        
     });
 
     $('.comment-show').on('click','.pl-hf',function(){
@@ -139,3 +167,9 @@
             $(this).find('.date-dz-z-click-red').addClass('red');
         }
     })
+
+
+
+
+
+// })

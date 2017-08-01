@@ -5,5 +5,8 @@
  */
 var testStr = 'testing';
 
-var urlGlobal = "http://bl.cn";
+var urlGlobal = "http://localhost/blog/public";
+
+
+// var token = 
 

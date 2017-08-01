@@ -51,10 +51,15 @@
     </div>
 @stop
 @section('javascript')
-    <script src="{{asset('home/js/global.js')}}"></script>
-    <script src="{{asset('home/js/myBlog.js')}}"></script>
+    <!-- <script src="{{asset('home/js/jquery.min.js')}}"></script>
+    <script src="{{asset('home/js/global.js')}}"></script> -->
     <script src="{{asset('home/js/home.js')}}"></script>
+    <script src="{{asset('home/js/myBlog.js')}}"></script>
+
     <script type="text/javascript">
+        //头像地址
+        $(".head-img").attr("src",urlGlobal+"/{{$userInfo->portrait($userInfo->head_portrait)}}");
+        //个人信息修改
         $("#photo").change(function(){
             var filepath=$("#photo").val(); 
             var extStart=filepath.lastIndexOf("."); 
@@ -83,10 +88,14 @@
                   url: urlGlobal+'/updatePt',
                   type: 'post',
                   data: portrait,
-                 
+                  async: false,  
+                  cache: false,  
+                  contentType: false,  
+                  processData: false,  
                   success: function (data) {  
                       // $("#avatar").attr({'src':returndata.data});
                       if (data.status == 1) {
+                        window.location.reload();
                         alert("修改成功");
                       }
                       
@@ -125,6 +134,10 @@
                 alert("名字不能为空");
                 return false;
             }
+            if (name.length<3) {
+                alert("名字长度不能少于3个字符");
+                return false;
+            }
             if (!intrest) {
                 alert("爱好不能为空");
                 return false;
@@ -157,6 +170,9 @@
                         $("#intrest").html(intrest)
                         $("#maxim").html(maxim);
                         $("#self-evaluate").html(selfEvaluate);
+
+                        $("#self-info").show();
+                        $("#change").hide();
                         alert("修改成功");
                     }
                     console.log(html)
@@ -166,58 +182,9 @@
                 }
 
             });
-            // console.log(selfEvaluate);
-            // console.log(intrest);
-            // alert(selfEvaluate);
-            // var User=new Array();
-            // User["name"]=name;
-            // User["sex"]=sex;
-            // User["hobby"]=intrest;
-            // User["signature"]=maxim;
-            // User["details"]=selfEvaluate;
-            // var User = {
-            //     name : name,
-            //     sex:sex,
-            //     hobby:intrest,
-            //     signature:maxim,
-            //     details:selfEvaluate
-            // }
-            // "User.name":name,"User.sex":sex,"User.hobby":intrest,"User.signature":maxim,"User.details":selfEvaluate
-            
-             
 
-        })
-
-        $(".star").bind("click",function(){
-            var zNum = $(this).find(".z-num").html();
-            console.log(zNum);
-            if($(this).is('.date-dz-z-click')){
-                zNum--;
-                $(this).removeClass('date-dz-z-click red');
-                $(this).find('.z-num').html(zNum);
-                $(this).find('.date-dz-z-click-red').removeClass('red');
-            }else {
-                zNum++;
-                $(this).addClass('date-dz-z-click');
-                $(this).find('.z-num').html(zNum);
-                $(this).find('.date-dz-z-click-red').addClass('red');
-            }
-            // {"ariticle_id":3}
-            
-            $.ajax({
-                url: urlGlobal+'/ariticle/praise',  
-                type: "post",
-                data:{"_token":"{{csrf_token()}}",ariticle_id:4} 
-               
-                // success: function(html){ 
-                //     console.log(html)
-                
-                // },
-                // error:function(err){
-                     
-                // }
-            })
-        })
+        }) 
     </script>
+    
 @stop
 

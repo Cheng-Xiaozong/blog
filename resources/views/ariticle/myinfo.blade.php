@@ -1,7 +1,7 @@
 <div class="mblog-userinfo g-container-left">
     <div class="g-title">我的信息</div>
-    <!-- src="img/pageHome/usericon02.png" -->
-    <div id="div1"><img class="mblog-icon"  src="http://localhost/blog/public/{{$userInfo->portrait($userInfo->head_portrait)}}" id="avatar" /></div>
+    <!-- src="img/pageHome/usericon02.png"  http://localhost/blog/public/{{$userInfo->portrait($userInfo->head_portrait)}} -->
+    <div id="div1"><img class="mblog-icon  head-img"  src="" id="avatar" /></div>
     <div class="mblog-update">
         <!-- <a class="g-btn">更换头像<input title=" " name="user.photo" id="photo" type="file" ></a>
         <a class="g-btn" id="infomation">修改信息</a> -->
