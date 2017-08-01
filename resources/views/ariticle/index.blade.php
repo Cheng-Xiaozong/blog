@@ -269,18 +269,17 @@
             var oThis = $(this);
             //获取输入内容
             var oHfVal = $(this).siblings('.flex-text-wrap').find('.hf-input').val();
-            console.log(oHfVal)
+            
             var oHfName = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
             var oAllVal = '回复@'+oHfName;
 
             //文章ID
             var thisAriticleId = $(".blogcontent-title").attr("data-id");
             //当前楼层的ID
-            var floorId = $(this).parents('.hf-con').parents('.date-dz').parents('.all-pl-con').attr("floor-id");
+            var floorId = $(this).parents('.hf-con').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').attr("data-id");
             console.log(floorId);
             //parent-id
             var parentId = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').children(".comment-size-name").attr("user-id");
-            console.log(parentId);
 
             var startWord = oAllVal;
 
@@ -300,9 +299,6 @@
 
                   }
                   if(data.status == 1){
-                    console.log(data);
-                    // console.log(data["data"].id);
-                    // // $.each(data["data"],function(i,item){
                     var createFloorCommentParentId = data["data"].parent_user_id;
                     var createFloorCommentFloorId = data["data"].floor_id;
                     var createFloorCommentId = data["data"].id;
@@ -385,7 +381,7 @@
 
         })
 
-        //加载楼层的回复
+        
         //展开更多回复
         $('.comment-show').on('click','.toMore',function(){
             
@@ -399,6 +395,8 @@
               success: function (data) {  
                   // $("#avatar").attr({'src':returndata.data});
                   if(data.status == 1){
+                    console.log(data)
+                    oThis.siblings('.hf-list-con').css('display','block').empty();
                     $.each(data.data, function(i, item) {
                         if (item.parent_user_id == 0) {
                             var oHtml = '<div class="all-pl-con " hf-id = "'+item.id+'"  floor-id = "'+item.floor_id+'"><div class="pl-text hfpl-text clearfix"><a href="#" class="comment-size-name" user-id = "'+item.user_id+'">'+item.user_name+'：</a><span class="my-pl-con">'+item.content+'</span></div><div class="date-dz"> <span class="date-dz-left pull-left comment-time">'+item.created_at+'</span> <div class="date-dz-right pull-right comment-pl-block"> <a href="javascript:;" class="removeBlock">删除</a> <a href="javascript:;" class="date-dz-pl hf-at hf-con-block pull-left">回复</a></div> </div></div>';
