@@ -45,7 +45,7 @@
                             浏览（{{$newAriticle->views}}）
                         </div>
                         <div class="bloginfo-datetime">
-                            {{$newAriticle->author}} 发表于 {{$newAriticle->created_at}}
+                            <a href="{{url('brotherBlog',['user_id'=>$newAriticle->user_id])}}">{{$newAriticle->author}}</a> 发表于 {{$newAriticle->created_at}}
                         </div>
 
                     </div>

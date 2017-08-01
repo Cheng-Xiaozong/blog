@@ -13,7 +13,7 @@
                 <div class="comment-show-con-img pull-left"><img src="{{$comment->user_portrait}}" alt=""></div>
                 <div class="comment-show-con-list pull-left clearfix">
                     <div class="pl-text clearfix">
-                        <a href="#" class="comment-size-name" data-userId="{{$comment->user_id}}">{{$comment->user_name}} : </a>
+                        <a href="{{url('brotherBlog',['user_id'=>$comment->user_id])}}" class="comment-size-name" data-userId="{{$comment->user_id}}">{{$comment->user_name}} : </a>
                         <span class="my-pl-con">&nbsp;{{$comment->content}}</span>
                     </div>
                     <div class="date-dz">

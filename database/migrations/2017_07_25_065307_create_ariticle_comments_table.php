@@ -15,7 +15,7 @@ class CreateAriticleCommentsTable extends Migration
         Schema::create('ariticle_comments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->comment('用户ID');
-            $table->integer('ariticle_id')->comment('文章ID');
+            $table->integer('project_id')->comment('文章ID');
             $table->integer('floor_id')->comment('层ID');
             $table->integer('parent_user_id')->comment('父ID');
             $table->string('content')->comment('内容');

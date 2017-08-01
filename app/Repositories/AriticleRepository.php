@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\AriticleComment;
 use App\AriticlePraise;
 use App\Ariticle;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -23,7 +24,7 @@ class AriticleRepository
             ->paginate($num);
         foreach ($ariticles as $key => $value)
         {
-            $ariticles[$key]->comment_mum = CommentRepository::getCommentNum($value->id);
+            $ariticles[$key]->comment_mum = CommentRepository::getCommentNum(AriticleComment::class,$value->id);
             $ariticles[$key]->praise_num =  self::getAriticlePraiseNum($value->id);
         }
         return $ariticles;
@@ -52,7 +53,7 @@ class AriticleRepository
         if(!empty($ariticle))
         {
             $ariticle->author = self::getAuthorByUserId($ariticle->user_id);
-            $ariticle->comment_mum = CommentRepository::getCommentNum($ariticle->id);
+            $ariticle->comment_mum = CommentRepository::getCommentNum(AriticleComment::class,$ariticle->id);
             $ariticle->praise_num = self::getAriticlePraiseNum($ariticle->id);
         }
         return $ariticle;

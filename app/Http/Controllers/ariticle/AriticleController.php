@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Ariticle;
 
 use App\Ariticle;
+use App\AriticleComment;
+use App\AriticleCommentPraise;
 use App\Repositories\AriticleRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\UserRepository;
@@ -16,12 +18,22 @@ class AriticleController extends Controller
     protected $ariticle;
     protected $user;
     protected $comment;
-    public function __construct(Request $request,AriticleRepository $ariticle,UserRepository $user,CommentRepository $comment)
-    {
+    protected $AriticleComment;
+    protected $AriticleCommentPraise;
+    public function __construct(
+        Request $request,
+        AriticleRepository $ariticle,
+        UserRepository $user,
+        CommentRepository $comment,
+        AriticleComment $AriticleComment,
+        AriticleCommentPraise $AriticleCommentPraise
+    ){
         $this->request=$request;
         $this->ariticle = $ariticle;
         $this->user = $user;
         $this->comment = $comment;
+        $this->AriticleComment = $AriticleComment;
+        $this->AriticleCommentPraise = $AriticleCommentPraise;
     }
 
     //首页
@@ -227,14 +239,14 @@ class AriticleController extends Controller
     //获取评论
     public function getComment($ariticle_id)
     {
-        return $this->comment::getComment($ariticle_id);
+        return $this->comment::getComment($this->AriticleComment,$ariticle_id,$this->AriticleCommentPraise);
     }
 
     //获取层级评论
     public function getFloorDetailComment()
     {
         $floor_id=$this->request->input('floor_id');
-        $result=$this->comment::getFloorDetailComment($floor_id);
+        $result=$this->comment::getFloorDetailComment($this->AriticleComment,$floor_id);
         return empty(count($result)) ? ajaxReturn(-1,'数据为空！') : ajaxReturn(1,'查询成功！',$result);
     }
 
@@ -243,7 +255,7 @@ class AriticleController extends Controller
     {
         $ariticle_id=$this->request->input('ariticle_id');
         $last_id=$this->request->input('last_id');
-        $result=$this->comment::commentsMore($ariticle_id,$last_id);
+        $result=$this->comment::commentsMore($this->AriticleComment,$ariticle_id,$last_id,$this->AriticleCommentPraise);
         return empty(count($result)) ? ajaxReturn(-1,'数据为空！') : ajaxReturn(1,'查询成功！',$result);
     }
 
@@ -269,7 +281,7 @@ class AriticleController extends Controller
         $data['user_id']=$this->user::getUserId();
         $data['floor_id']=0;
         $data['parent_user_id']=0;
-        $result=$this->comment::createComment($data);
+        $result=$this->comment::createComment($this->AriticleComment,$data);
         if($result){
             return ajaxReturn(1,'评论成功！',$result);
         }else{
@@ -300,7 +312,7 @@ class AriticleController extends Controller
         $data=$this->request->input('Comment');
         $data['user_id']=$this->user::getUserId();
         $data['parent_user_id']=0;
-        $result=$this->comment::createComment($data);
+        $result=$this->comment::createComment($this->AriticleComment,$data);
         if($result){
             return ajaxReturn(1,'回复成功！',$result);
         }else{
@@ -332,7 +344,7 @@ class AriticleController extends Controller
         }
         $data=$this->request->input('Comment');
         $data['user_id']=$this->user::getUserId();
-        $result=$this->comment::createComment($data);
+        $result=$this->comment::createComment($this->AriticleComment,$data);
         if($result){
             return ajaxReturn(1,'回复成功！',$result);
         }else{
@@ -343,7 +355,7 @@ class AriticleController extends Controller
     //删除主楼评论
     public function deleteComment()
     {
-        $result=$this->comment::deleteComment($this->request->input('id'));
+        $result=$this->comment::deleteComment($this->AriticleComment,$this->request->input('id'));
         if($result){
             return ajaxReturn(1,'删除成功！');
         }else{
@@ -354,7 +366,7 @@ class AriticleController extends Controller
     //删除评论楼层回复
     public function deleteFloorComment()
     {
-        $result=$this->comment::deleteFloorComment($this->request->input('floor_id'));
+        $result=$this->comment::deleteFloorComment($this->AriticleComment,$this->request->input('floor_id'));
         if($result){
             return ajaxReturn(1,'删除成功！');
         }else{
@@ -375,10 +387,10 @@ class AriticleController extends Controller
         ],[
             'comment_id' => '评论ID'
         ]);
-        if ($validator->fails()) {
+        if($validator->fails()) {
             return ajaxReturn(-2,'非法参数',$validator->errors());
         }
-        $result=$this->comment::commentPraise($this->user::getUserId(),$this->request->input('comment_id'));
+        $result=$this->comment::commentPraise($this->AriticleCommentPraise,$this->user::getUserId(),$this->request->input('comment_id'));
         switch ($result)
         {
             case 'success':
@@ -390,8 +402,34 @@ class AriticleController extends Controller
         }
     }
 
+    //兄弟的博客
+    public function brotherBlog($user_id)
+    {
+        $data['userInfo']=$this->user::getUserById($user_id);
+        $data['ariticles']=$this->ariticle::getAriticleByUserId($user_id,2);
+        if($data['userInfo'])
+        {
+            return view('ariticle.brotherblog',$data);
+        }else{
+            return view('errors.404');
+        }
+    }
 
+    //兄弟的博客详情
+    public function BrotherAriticleDetail($ariticle_id)
+    {
+        $ariticle=$this->ariticle->getAriticleById($ariticle_id);
+        if($ariticle)
+        {
+            $data['userInfo']=$this->user::getUserById($ariticle->user_id);
+            $data['newAriticle']=$ariticle;
+            $data['comments']=$this->getComment($ariticle_id);
+            return view('ariticle.BrotherAriticleDetail',$data);
+        }else{
+            return view('errors.404');
+        }
 
+    }
 
 
 }
