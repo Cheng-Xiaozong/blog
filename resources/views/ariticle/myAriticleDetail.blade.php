@@ -177,15 +177,19 @@
             $('.content').flexText();
         });
 
+
         function keyUP(t){
             var len = $(t).val().length;
             if(len > 10){
                 $(t).val($(t).val().substring(0,1001));
             }
+            userJudge();
         }
 
-        $('.commentAll').on('click','.plBtn',function(){
 
+        
+        $('.commentAll').on('click','.plBtn',function(){
+            
             var oSize = $(this).siblings('.flex-text-wrap').find('.comment-input').val();
             var ariticle_id = $(".blogcontent-title").attr("data-id");
             var newComment = $(this).parents('.reviewArea').siblings('.comment-show');
@@ -267,7 +271,7 @@
             //文章ID
             var thisAriticleId = $(".blogcontent-title").attr("data-id");
             //当前楼层的ID
-            var floorId = $(this).parents('.hf-con').parents('.comment-show-con-list').parents('.comment-show-con').parents('.comment-show').attr("data-id");
+            var floorId = $(this).parents('.hf-con').parents('.comment-show-con-list').parents('.comment-show-con').attr("data-id");
             console.log(floorId);
 
 
@@ -366,6 +370,16 @@
         
         //头像
         $(".head-img").attr("src",urlGlobal+"/{{$userInfo->portrait($userInfo->head_portrait)}}");
+
+        // $(".comment-head-img").each(function(url){
+        //     $(this).attr("src",urlGlobal+"/"+url);
+        // })
+        // var commentImgUrl;
+        // function commentHeadImg(commentImgUrl){
+        //     // $(this).attr("src",urlGlobal+'/'+commentImgUrl);
+        //     document.images.imgInit.src=urlGlobal+'/'+commentImgUrl;
+        // }
+
     </script>
 
 @stop

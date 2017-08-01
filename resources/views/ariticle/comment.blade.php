@@ -12,12 +12,12 @@
             <div class="comment-show-con clearfix" data-id="{{$comment->id}}">
                 <div class="comment-show-con-img pull-left">
                     <!-- <img  src="{{$comment->user_portrait}}" alt=""> -->
-                    <img class="comment-head-img" src="{{$comment->user_portrait}}" alt="">
+                    <img class="comment-head-img" src="" alt="">
                 </div>
                 <div class="comment-show-con-list pull-left clearfix">
                     <div class="pl-text clearfix">
-                        <a href="#" class="comment-size-name" data-userId="{{$comment->user_id}}">{{$comment->user_name}}</a>
-                        <span>：</span>
+                        <a href="#" class="comment-size-name" data-userId="{{$comment->user_id}}">{{$comment->user_name}}：</a>
+                        <!-- <span class="comment-size-name"></span> -->
                         <span class="my-pl-con">&nbsp;{{$comment->content}}</span>
                     </div>
                     <div class="date-dz">
@@ -26,7 +26,7 @@
                             @if(!Auth::guest() && $comment->user_id == Auth::user()->id)
                                 <a href="javascript:;" class="removeBlock">删除</a>
                             @endif
-                            <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复({{$comment->num}})</a>
+                            <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复(<span class="hfNum">{{$comment->num}}</span>)</a>
                             <span class="pull-left date-dz-line">|</span>
                             <!-- <i class="date-dz-z-click-red"></i> -->
                             <a href="javascript:;" class="date-dz-z pull-left">赞 (<i class="z-num">{{$comment->praises}}</i>)</a>
@@ -47,6 +47,8 @@
                             </div>
                         </div> -->
                     </div>
+                    <div class="toMore">展开更多</div>
+                    <div class="shouqi">收起</div>
                 </div>
             </div>
         @endforeach

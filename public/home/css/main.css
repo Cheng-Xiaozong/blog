@@ -28,6 +28,8 @@ input:focus, textarea:focus, button:focus{outline:none; border:none}
 .red {
     background-position: -6px -119px !important;
 }
+
+
 /*动画*/
 @keyframes modalDialogShow{0%{top:0}33%{top:50%}66%{top:40%}100%{top:50%}}
 @-webkit-keyframes modalDialogShow{0%{top:0}33%{top:50%}66%{top:40%}100%{top:50%}}
@@ -313,6 +315,17 @@ input:focus, textarea:focus, button:focus{outline:none; border:none}
 
 
 
-
+.shouqi{
+    display: none;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
+.toMore{
+	/*display: none!important;*/
+	color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
 
 

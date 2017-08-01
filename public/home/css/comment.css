@@ -65,6 +65,14 @@ body{font-family: "Microsoft Yahei";}
     font-size: 12px;
     color: #339b53;
 }
+.parentIdStyle {
+    font-size: 12px;
+    color: #339b53;
+}
+.parentBox {
+    font-size: 12px;
+    color: #8b8b8b;
+}
 .my-pl-con {
     font-size: 12px;
     color: #8b8b8b;
@@ -100,6 +108,7 @@ body{font-family: "Microsoft Yahei";}
 .hf-con-block {
     display: block;
 }
+
 .date-dz-pl, .date-dz-line, .date-dz-z {
     font-size: 12px;
     color: #8b8b8b;
@@ -128,6 +137,20 @@ body{font-family: "Microsoft Yahei";}
     background-position: -6px -119px !important;
 }
 .hf-pl {
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #339b53;
+    text-align: center;
+    display: block;
+    float: right;
+    color: #FFFFFF;
+    font-size: 12px;
+    border-radius: 6px;
+    margin-right: 2px;
+    margin-top: 20px;
+}
+.hf-pl-two {
     width: 70px;
     height: 30px;
     line-height: 30px;
