@@ -1,5 +1,4 @@
-	var headImgUrl = $(".head-img").attr("imgurl");
-	$(".head-img").attr("src",urlGlobal+'/'+headImgUrl);
+
 	//头像地址
 	//个人信息修改
 	$("#photo").change(function(){
@@ -29,6 +28,10 @@
 	          url: urlGlobal+'/updatePt',
 	          type: 'post',
 	          data: portrait,
+	          async: false,  
+	          cache: false,  
+	          contentType: false,  
+	          processData: false,  
 	          success: function (data) {  
 	              if (data.status == 1) {
 	                $(".head-img").attr("src",urlGlobal+'/'+data.data);
@@ -115,7 +118,6 @@
 	                $("#change").hide();
 	                alert("修改成功");
 	            }
-	            console.log(html)
 	        },
 	        error:function(err){
 	             
@@ -124,3 +126,5 @@
 	    });
 
 	}) 
+	var headImgUrl = $(".head-img").attr("imgurl");
+	$(".head-img").attr("src",urlGlobal+'/'+headImgUrl);
