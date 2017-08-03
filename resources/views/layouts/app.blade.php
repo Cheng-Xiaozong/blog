@@ -12,8 +12,10 @@
 
     @show
 </head>
-<body>
+<body jjj="{{csrf_token()}}">
+
 @section('header')
+
     <div class="home-header g-header">
         <div class="home-header-main g-header-main">
             <div class="home-header-logo g-header-logo">
@@ -44,11 +46,16 @@
                         @endif
 
                     </div>
-                    <div class="username g-pointer userLoginJudge" data-userId="{{ Auth::user()->id }}">
+                    <div class="username g-pointer userLoginJudge" data-userId="{{ Auth::user()->id }}" data-head_portrait="{{Auth::user()->head_portrait}}">
                          用户名：
                          <span id="userOfName">{{ Auth::user()->name }}</span>
                     </div>
                 @endif
+            </div>
+            <div class="home-header-userinfo g-header-userinfo">
+                    <div class="exit g-pointer">
+                        <span><a href="{{ url('/') }}">首页</a></span>
+                    </div>
             </div>
         </div>
     </div>

@@ -20,12 +20,12 @@
         </div>
     --}}
         <div class="modalDialog-bg" style="z-index: 1000;" >
-            <div class="modalDialog-content" style="border: 2px solid red;">
+            <div class="modalDialog-content" >
                 <img class="modalDialog-close pointer" src="{{asset('home/img/pageIndex/cancle.png')}}">
                 <div  class="modalDialog-top"><img src="{{asset('home/img/pageIndex/logo.png')}}"/></div>
                 <div  class="modalDialog-middle">
                     @foreach($errors->all() as $error)
-                        {{ $error }}
+                        {{ $error }}；
                     @endforeach
                 </div>
                 <div  class="modalDialog-bottom">
@@ -52,7 +52,7 @@
                     </script>
                 </div>
                 <div class="blog-btndiv">
-                    <div class="g-btn"> <input type="submit" value="保存修改" class="g-btn" id="tijiao"></div>
+                    <div class="g-btn blogSubmit"> <input type="submit" value="保存修改" class="g-btn" id="tijiao"></div>
                 </div>
             </form>
         </div>
@@ -72,5 +72,6 @@
         });
     </script>
     <script src="{{asset('home/js/modalDialog.js')}}"></script>
+    <script src="{{asset('home/js/create-blog.js')}}"></script>
 @stop
 

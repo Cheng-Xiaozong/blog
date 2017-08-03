@@ -105,6 +105,14 @@ body{font-family: "Microsoft Yahei";}
     display: block;
     opacity: 0;
 }
+.removeBlockFirstFloor {
+    float: left;
+    font-size: 12px;
+    color: #8b8b8b;
+    margin-right: 24px;
+    display: block;
+    opacity: 0;
+}
 .hf-con-block {
     display: block;
 }
@@ -171,6 +179,14 @@ body{font-family: "Microsoft Yahei";}
     padding: 2% 0;
     float: left;
     margin: 0 2%;
+    overflow: hidden;
+}
+
+.all-pl-con .twoFloorCommentContent{
+    width: 88%;
+    margin-left: 4%;
+    margin-top: 1%;
+    
 }
 .atName {
     font-size: 12px;

@@ -38,7 +38,7 @@ class AriticleRepository
      */
     public static function ariticleList($num)
     {
-        return Ariticle::select('id','title')->paginate($num);
+        return Ariticle::select('id','title')->orderBy('id','desc')->paginate($num);
     }
 
     /**

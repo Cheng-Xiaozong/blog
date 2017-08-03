@@ -78,14 +78,14 @@ class AriticleController extends Controller
     //文章列表
     public function ariticleList()
     {
-        return $this->ariticle->ariticleList(8);
+        return $this->ariticle->ariticleList(10);
     }
 
     //我的博客
     public function myblog()
     {
         $data['userInfo']=$this->user::getUserById($this->user::getUserId());
-        $data['ariticles']=$this->ariticle::getAriticleByUserId($this->user::getUserId(),2);
+        $data['ariticles']=$this->ariticle::getAriticleByUserId($this->user::getUserId(),10);
         return view('ariticle.myblog',$data);
     }
 
@@ -153,7 +153,7 @@ class AriticleController extends Controller
     public function praise()
     {
         $validator = \Validator::make($this->request->input(), [
-            'ariticle_id' => 'required|min:2|max:20',
+            'ariticle_id' => 'required|integer',
         ], [
             'required' => ':attribute 为必填项',
             'integer' => ':attribute 不合法'
@@ -253,7 +253,7 @@ class AriticleController extends Controller
     //获取更多评论
     public function commentsMore()
     {
-        $ariticle_id=$this->request->input('ariticle_id');
+        $ariticle_id=$this->request->input('project_id');
         $last_id=$this->request->input('last_id');
         $result=$this->comment::commentsMore($this->AriticleComment,$ariticle_id,$last_id,$this->AriticleCommentPraise);
         return empty(count($result)) ? ajaxReturn(-1,'数据为空！') : ajaxReturn(1,'查询成功！',$result);
@@ -264,7 +264,7 @@ class AriticleController extends Controller
     {
         $validator = \Validator::make($this->request->input(), [
             'Comment.project_id' => 'required|integer',
-            'Comment.content' => 'required|min:2|max:50',
+            'Comment.content' => 'required',
         ], [
             'required' => ':attribute 为必填项',
             'min' => ':attribute 长度不符合要求',
@@ -295,7 +295,7 @@ class AriticleController extends Controller
         $validator = \Validator::make($this->request->input(), [
             'Comment.project_id' => 'required|integer',
             'Comment.floor_id' => 'required|integer',
-            'Comment.content' => 'required|min:2|max:50',
+            'Comment.content' => 'required',
         ], [
             'required' => ':attribute 为必填项',
             'min' => ':attribute 长度不符合要求',
@@ -327,7 +327,7 @@ class AriticleController extends Controller
             'Comment.project_id' => 'required|integer',
             'Comment.floor_id' => 'required|integer',
             'Comment.parent_user_id' => 'required|integer',
-            'Comment.content' => 'required|min:2|max:50',
+            'Comment.content' => 'required',
         ], [
             'required' => ':attribute 为必填项',
             'min' => ':attribute 长度不符合要求',
@@ -380,7 +380,7 @@ class AriticleController extends Controller
     public function commentPraise()
     {
         $validator = \Validator::make($this->request->input(),[
-            'comment_id' => 'required|min:2|max:20',
+            'comment_id' => 'required',
         ],[
             'required' => ':attribute 为必填项',
             'integer' => ':attribute 不合法'

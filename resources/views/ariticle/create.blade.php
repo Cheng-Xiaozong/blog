@@ -39,7 +39,7 @@
                 </div>
                 <div class="blog-btndiv">
 
-                    <div class="g-btn"> 
+                    <div class="g-btn blogSubmit"> 
                         <!-- <input type="submit" value="提交" class="g-btn" id="js-first-judge"> -->
                         <input type="submit" value="提交" class="g-btn" id="tijiao" >
                     </div>
@@ -50,7 +50,6 @@
 @stop
 
 @section('javascript')
-    <script src="{{asset('home/js/jquery.min.js')}}"></script>
     <!-- 配置文件 -->
     <script type="text/javascript" src="{{asset('static/ueditor/ueditor.config.js')}}"></script>
     <!-- 编辑器源码文件 -->
@@ -64,33 +63,7 @@
 
         
     </script>
-    <script src="{{asset('home/js/modalDialog.js')}}"></script>
-
-    <script type="text/javascript">
-        // $('.modalDialog-close').css('visibility', closeBtnShow?'visible':'hidden');
-        // $('.modalDialog-bottom span:last').css('visibility', cancleBtnShow?'visible':'hidden');
-        $('.modalDialog-close').unbind('click').bind('click', removeSelf);
-        $('.pointer').unbind('click').bind('click', function(){
-            $('.modalDialog-bg').remove();
-        });
-        function removeSelf(){
-            $('.modalDialog-bg').remove();
-        }
-
-        // $("#js-first-judge").click(function(){
-            // if(!$("#pblog-title").val()){
-            //     $("#tijiao").hide();
-            //     $("#js-first-judge").show();
-            //     $("#js-first-judge").click(function(){
-            //         alert("标题不为空")
-            //     })
-            // }else{
-            //     $("#tijiao").show();
-            //     $("#js-first-judge").hide();
-            // }
-        // })
-        
-    </script>
+    <script src="{{asset('home/js/create-blog.js')}}"></script>
 @stop
 
 

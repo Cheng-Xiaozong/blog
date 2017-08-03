@@ -12,18 +12,18 @@
             <div class="comment-show-con clearfix" data-id="{{$comment->id}}">
                 <div class="comment-show-con-img pull-left">
                     <!-- <img  src="{{$comment->user_portrait}}" alt=""> -->
-                    <img class="comment-head-img" src="" alt="">
+                    <img class="comment-head-img" data-face="{{$comment->user_portrait}}" src="{{$comment->user_portrait}}" alt="">
                 </div>
                 <div class="comment-show-con-list pull-left clearfix">
                     <div class="pl-text clearfix">
                         <a href="{{url('brotherBlog',['user_id'=>$comment->user_id])}}" class="comment-size-name" data-userId="{{$comment->user_id}}">{{$comment->user_name}}：</a>
-                        <span class="my-pl-con">&nbsp;{{$comment->content}}</span>
+                        <span class="my-pl-con">{{$comment->content}}</span>
                     </div>
                     <div class="date-dz">
                         <span class="date-dz-left pull-left comment-time">{{$comment->created_at}}</span>
                         <div class="date-dz-right pull-right comment-pl-block">
                             @if(!Auth::guest() && $comment->user_id == Auth::user()->id)
-                                <a href="javascript:;" class="removeBlock">删除</a>
+                                <a href="javascript:;" class="removeBlock removeBlockFirstFloor">删除</a>
                             @endif
                             <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复(<span class="hfNum">{{$comment->num}}</span>)</a>
                             <span class="pull-left date-dz-line">|</span>
@@ -32,27 +32,12 @@
                         </div>
                     </div>
                     <div class="hf-list-con">
-                        <!-- <div class="all-pl-con">
-                            <div class="pl-text hfpl-text clearfix">
-                                <a href="#" class="comment-size-name">我的名字 : </a>
-                                <span class="my-pl-con">oAt</span>
-                            </div>
-                            <div class="date-dz"> 
-                                <span class="date-dz-left pull-left comment-time">now</span> 
-                                <div class="date-dz-right pull-right comment-pl-block"> 
-                                    <a href="javascript:;" class="removeBlock">删除</a> 
-                                    <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
-                                </div> 
-                            </div>
-                        </div> -->
                     </div>
-                    <div class="toMore">展开更多</div>
-                    <div class="shouqi">收起</div>
                 </div>
             </div>
         @endforeach
         @else
-            <div class="blogcontent-loadmore g-btn no-comment">暂无评论！</div>
+            <div class="  no-comment">暂无评论！</div>
         @endif
     </div>
 </div>

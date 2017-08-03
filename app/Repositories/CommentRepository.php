@@ -12,7 +12,7 @@ class CommentRepository
      */
     public static function getComment($project,$project_id,$comment)
     {
-        $comments = $project::whereRaw('project_id = ? and floor_id = ?',[$project_id,0])->take(5)->get();
+        $comments = $project::whereRaw('project_id = ? and floor_id = ?',[$project_id,0])->take(5)->orderBy('id', 'desc')->get();
         foreach ($comments as $k =>$v)
         {
             $comments[$k]->user_name=UserRepository::getUserNameById($v->user_id);
@@ -30,7 +30,7 @@ class CommentRepository
      */
     public static function commentsMore($project,$project_id,$last_id,$comment)
     {
-        $comments = $project::whereRaw('project_id = ? and floor_id = ? and id > ?',[$project_id,0,$last_id])->take(5)->get();
+        $comments = $project::whereRaw('project_id = ? and floor_id = ? and id < ?',[$project_id,0,$last_id])->take(5)->orderBy('id', 'desc')->get();
         foreach ($comments as $k =>$v)
         {
             $comments[$k]->user_name=UserRepository::getUserNameById($v->user_id);
@@ -104,7 +104,7 @@ class CommentRepository
         }else{
            if($comment->delete()){
                $project::where('floor_id','=',$id)->delete();
-               return ture;
+               return true;
            }else{
                return false;
            }
@@ -134,7 +134,7 @@ class CommentRepository
      */
     public static function commentPraise($project,$user_id,$comment_id)
     {
-        $praise=$project::whereRaw('user_id = ? and project_id = ?',[$user_id,$comment_id])->get();
+        $praise=$project::whereRaw('user_id = ? and comment_id = ?',[$user_id,$comment_id])->get();
         if(!count($praise)){
             $data['user_id']=$user_id;
             $data['comment_id']=$comment_id;
