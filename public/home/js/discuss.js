@@ -24,7 +24,6 @@ function userJudge(){
 
 $(".comment-input").on('click',function(){
     userJudge();
-    // return true;
 })
 
 function keyUP(t){
@@ -52,7 +51,6 @@ $('.commentAll').on('click','.plBtn',function(){
       dataType:'json',
       data: { "_token":token,"Comment[project_id]":ariticle_id,"Comment[content]":oSize},
       success: function (data) {  
-          console.log(data);
           if (data.status == -1) {
             alert("评论失败");
           }
@@ -89,7 +87,6 @@ $('.commentAll').on('click','.plBtn',function(){
             var fhName = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
             //回复@
             var fhN = '回复@'+fhName;
-            //var oInput = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.hf-con');
             var fhHtml = '<div class="hf-con pull-left"> <textarea class="content comment-input hf-input" placeholder="" onkeyup="keyUP(this)"></textarea> <a href="javascript:;" class="hf-pl">评论</a></div>';
 
            
@@ -104,11 +101,8 @@ $('.commentAll').on('click','.plBtn',function(){
                 $(this).removeClass('hf-con-block');
                 $('.content').flexText();
                 $(this).parents('.date-dz-right').siblings('.hf-con').find('.pre').css('padding','6px 15px');
-                //console.log($(this).parents('.date-dz-right').siblings('.hf-con').find('.pre'))
                 //input框自动聚焦
                 $(this).parents('.date-dz-right').siblings('.hf-con').find('.hf-input').val('').focus().val(fhN);
-                // $(".shouqi").addClass('hf-con-block')
-                // $(this).parents('.date-dz-right').parents(".date-dz").siblings('.hf-list-con').removeClass('hf-con-block');
                 var hfLength = oThis.parents('.date-dz-right').parents('.date-dz').siblings('.hf-list-con').children(".all-pl-con");
                 var hfNum = oThis.children(".hfNum").html();
                 if (hfLength.length < hfNum) {
@@ -132,8 +126,6 @@ $('.commentAll').on('click','.plBtn',function(){
                   dataType:'json',
                   data: {"_token":token,"floor_id":floorId},
                   success: function (data) {  
-                      // $("#avatar").attr({'src':returndata.data});
-                      console.log(data);
                        if(data.status == 1){
                             $.each(data.data, function(i, item) {
                                 //判断是否是自己的评论ID，然后显示回复的删除按钮
@@ -190,7 +182,6 @@ $('.commentAll').on('click','.plBtn',function(){
             var oThis = $(this);
             //获取输入内容
             var oHfVal = $(this).siblings('.flex-text-wrap').find('.hf-input').val();
-            console.log(oHfVal)
             var oHfName = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
             var oAllVal = '回复@'+oHfName;
 
@@ -213,21 +204,16 @@ $('.commentAll').on('click','.plBtn',function(){
               dataType:'json',
               data: { "_token":token,"Comment[project_id]":thisAriticleId,"Comment[content]":huifuContent,"Comment[floor_id]":floorId},
               success: function (data) {  
-                  // $("#avatar").attr({'src':returndata.data});
                   if (data.status == -1) {
                     alert("评论失败");
                   }
                   if(data.status == 1){
-                    console.log(data);
-                    // console.log(data["data"].id);
-                    // // $.each(data["data"],function(i,item){
                     var createFloorUserId = data["data"].user_id;
                     var createFloorParentUserId = data["data"].parent_user_id;
                     var createFloorFloorId = data["data"].floor_id;
                     var createFloorId = data["data"].id;
                     var createFloorContent = data["data"].content;
                     var createFloorTime = data["data"].created_at;
-                    // var createFloorUser = data["data"].user_name;
                     var createFloorUser = $("#userOfName").html();
 
 
@@ -287,7 +273,6 @@ $('.commentAll').on('click','.plBtn',function(){
             var fhName = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
             //回复@
             var fhN = '回复@'+fhName;
-            //var oInput = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.hf-con');
             var fhHtml = '<div class="hf-con pull-left"> <textarea class="content comment-input hf-input" placeholder="" onkeyup="keyUP(this)"></textarea> <a href="javascript:;" class="hf-pl-two">评论</a></div>';
             //显示回复
             if($(this).is('.hf-con-block')){
@@ -295,7 +280,6 @@ $('.commentAll').on('click','.plBtn',function(){
                 $(this).removeClass('hf-con-block');
                 $('.content').flexText();
                 $(this).parents('.date-dz-right').siblings('.hf-con').find('.pre').css('padding','6px 15px');
-                //console.log($(this).parents('.date-dz-right').siblings('.hf-con').find('.pre'))
                 //input框自动聚焦
                 $(this).parents('.date-dz-right').siblings('.hf-con').find('.hf-input').val('').focus().val(fhN);
             }else {
@@ -320,7 +304,6 @@ $('.commentAll').on('click','.plBtn',function(){
             var thisAriticleId = $(".blogcontent-title").attr("data-id");
             //当前楼层的ID
             var floorId = $(this).parents('.hf-con').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con').attr("data-id");
-            console.log(floorId);
             //parent-id
             var parentId = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').children(".comment-size-name").attr("user-id");
 
@@ -335,7 +318,6 @@ $('.commentAll').on('click','.plBtn',function(){
               dataType:'json',
               data: { "_token":token,"Comment[project_id]":thisAriticleId,"Comment[content]":huifuContent,"Comment[floor_id]":floorId,"Comment[parent_user_id]":parentId},
               success: function (data) { 
-                  // $("#avatar").attr({'src':returndata.data});
                   if (data.status == -1) {
                     alert("评论失败");
 
@@ -381,7 +363,6 @@ $('.commentAll').on('click','.plBtn',function(){
               dataType:'json',
               data: { "_token":token,"ariticle_id":projectId},
               success: function (data) { 
-                  console.log(data);
                   if (data.status == -1) {
                     alert("点赞失败");
 
@@ -421,7 +402,6 @@ $('.commentAll').on('click','.plBtn',function(){
               dataType:'json',
               data: { "_token":token,"comment_id":commentId,},
               success: function (data) { 
-                  console.log(data);
                   if (data.status == -1) {
                     alert("点赞失败");
 
@@ -429,9 +409,7 @@ $('.commentAll').on('click','.plBtn',function(){
                   if(data.status == 1){
 
                     var dzNum = oThis.children(".z-num").html();
-                    console.log(dzNum);
                     dzNum++;
-                    console.log(dzNum);
                     oThis.children(".z-num").html(dzNum);
                     oThis.css({
                         "color":"red"
@@ -456,7 +434,6 @@ $('.commentAll').on('click','.plBtn',function(){
 
             var indexComment = $(this).parents('.date-dz-right').parents('.date-dz').parents('.comment-show-con-list').parents('.comment-show-con');
             var indexCommentId = indexComment.attr("data-id");
-            console.log(indexCommentId);
             $.ajax({
               url: urlGlobal+'/deleteComment',
               type: 'post',
@@ -511,7 +488,6 @@ $('.commentAll').on('click','.plBtn',function(){
 
             var oThis = $(this);
             var lastId = oThis.siblings(".commentAll").children('.comment-show').children(".comment-show-con:last").attr("data-id");
-            console.log(lastId);
             var projectId = $(".blogcontent-title").attr("data-id");
             $.ajax({
               url: urlGlobal+'/commentsMore',
@@ -519,7 +495,6 @@ $('.commentAll').on('click','.plBtn',function(){
               dataType:'json',
               data: { "_token":token,"project_id":projectId,"last_id":lastId},
               success: function (data) {  
-                    console.log(data);
                   if (data.status == -1) {
                     oThis.html("我是有底线的！");
                   }

@@ -4,7 +4,6 @@
  * Login and register.
  */
 ;(function(){
-    // loginBtn clicked
     $('#home-username').text(sessionStorage.getItem("username"));
     
     let homeBannerWidth = $('.home-banner').width();
@@ -22,9 +21,6 @@
 
 
 var showOrHide=true;
-// $("#reply-click").click( function (){
-//     $('.reply-content').show();
-// })
 $(".reply").click( function () { 
     if(showOrHide){
         $('.reply-content').show();

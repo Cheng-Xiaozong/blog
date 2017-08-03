@@ -11,7 +11,6 @@
         @foreach($comments as $comment)
             <div class="comment-show-con clearfix" data-id="{{$comment->id}}">
                 <div class="comment-show-con-img pull-left">
-                    <!-- <img  src="{{$comment->user_portrait}}" alt=""> -->
                     <img class="comment-head-img" data-face="{{$comment->user_portrait}}" src="{{$comment->user_portrait}}" alt="">
                 </div>
                 <div class="comment-show-con-list pull-left clearfix">
@@ -27,7 +26,6 @@
                             @endif
                             <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复(<span class="hfNum">{{$comment->num}}</span>)</a>
                             <span class="pull-left date-dz-line">|</span>
-                            <!-- <i class="date-dz-z-click-red"></i> -->
                             <a href="javascript:;" class="date-dz-z pull-left">赞 (<i class="z-num">{{$comment->praises}}</i>)</a>
                         </div>
                     </div>

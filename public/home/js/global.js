@@ -10,5 +10,4 @@ var urlGlobal = "http://localhost/blog/public";
 var token = $("body").attr("jjj");
 
 
-// var token = 
 

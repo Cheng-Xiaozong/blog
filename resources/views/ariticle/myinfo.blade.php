@@ -1,6 +1,5 @@
 <div class="mblog-userinfo g-container-left">
     <div class="g-title">我的信息</div>
-    <!-- src="img/pageHome/usericon02.png"  http://localhost/blog/public/{{$userInfo->portrait($userInfo->head_portrait)}} -->
     <div id="div1"><img class="mblog-icon  head-img" imgurl="{{$userInfo->portrait($userInfo->head_portrait)}}" src="" id="avatar" /></div>
     <div class="mblog-update">
         <form id="person-photo" enctype="multipart/form-data">

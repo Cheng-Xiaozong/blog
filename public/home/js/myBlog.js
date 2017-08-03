@@ -1,9 +1,6 @@
-// $(document).ready(function(){
-
-
-	
+	var headImgUrl = $(".head-img").attr("imgurl");
+	$(".head-img").attr("src",urlGlobal+'/'+headImgUrl);
 	//头像地址
-	// $(".head-img").attr("src",urlGlobal+"/{{$userInfo->portrait($userInfo->head_portrait)}}");
 	//个人信息修改
 	$("#photo").change(function(){
 	    var filepath=$("#photo").val(); 
@@ -15,7 +12,6 @@
 	    } 
 	    var file_size = 0;
 	    file_size = this.files[0].size;
-	    // console.log(file_size/1024/1024 + " MB");
 	    var size = file_size / 1024;
 	    if(size > 10240){
 	        alert("上传的文件大小不能超过10M！");
@@ -33,12 +29,7 @@
 	          url: urlGlobal+'/updatePt',
 	          type: 'post',
 	          data: portrait,
-	          async: false,  
-	          cache: false,  
-	          contentType: false,  
-	          processData: false,  
 	          success: function (data) {  
-	              console.log(data)
 	              if (data.status == 1) {
 	                $(".head-img").attr("src",urlGlobal+'/'+data.data);
 	              }
@@ -75,7 +66,6 @@
 	$("#upload-info").click(function(){
 	    var name = $("#name2").val();
 	    var sex =  $('input:radio[name="1"]:checked').val();
-	    // console.log(sex);
 	    var intrest = $("#intrest2").val();
 	    var maxim = $("#maxim2").val();
 	    var selfEvaluate = $("#self-evaluate2").val();
@@ -134,7 +124,3 @@
 	    });
 
 	}) 
-	var headImgUrl = $(".head-img").attr("imgurl");
-	$(".head-img").attr("src",urlGlobal+'/'+headImgUrl);
-
-// })

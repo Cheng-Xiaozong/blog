@@ -30,7 +30,6 @@
                 </div>
                 <div  class="modalDialog-bottom">
                     <span class="pointer" id="delete" style="background: rgba(23,22,27,1);">确定</span>
-                    <!-- <span class="pointer" style="background: rgba(23,22,27,0.5);">取消</span> -->
                 </div>
             </div>
         </div>
